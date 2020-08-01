@@ -1,0 +1,85 @@
+.background {
+  width: 750rpx;
+  height: 1400rpx;
+}
+.init {
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.init view {
+  font-size: 70rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.init text {
+  text-align: center;
+  margin-top: 600rpx;
+}
+.big-box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+          flex-wrap: wrap;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  padding: 130rpx 90rpx;
+}
+.big-box .min-box {
+  margin: 10rpx 10rpx;
+  width: 120rpx;
+  height: 160rpx;
+}
+.big-box .result_title {
+  margin-top: 200rpx;
+  font-size: 80rpx;
+  color: white;
+}
+.big-box .result_prompt {
+  margin-top: 40rpx;
+  font-size: 40rpx;
+}
+.big-box button {
+  width: 250rpx;
+  height: 100rpx;
+  font-size: 35rpx;
+  border: 3px solid white;
+  color: white;
+}
+.big-box #continue_btn {
+  position: absolute;
+  margin-top: 600rpx;
+  background-color: transparent;
+}
+.big-box .buttons {
+  position: absolute;
+  margin-top: 600rpx;
+}
+.big-box .buttons #resurrection_btn {
+  position: absolute;
+  left: -300rpx;
+  background-color: #87f70e;
+}
+.big-box .buttons #reset_btn {
+  position: absolute;
+  left: 70rpx;
+  background-color: #f7dd48;
+}
+.prompt {
+  font-size: 50rpx;
+  margin: 100rpx 60rpx;
+}
+

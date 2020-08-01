@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/memoryTraining/memoryTraining",
+    "pages/redEnvelope/redEnvelope",
+    "pages/distinguishColor/distinguishColor"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "应急反应训练",
+    "navigationBarBackgroundColor": "#73edff",
+    "backgroundColor": "#eeeeee"
+  },
+  "usingComponents": {}
+}
