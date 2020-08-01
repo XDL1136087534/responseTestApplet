@@ -8,15 +8,15 @@
 			}
 		},
 		{
-		    "path" : "pages/memoryTraining/memoryTraining",
-		    "style" : {
-				"navigationBarTitleText":"快速记忆训练"
-			}
-		},
-		{
 		    "path" : "pages/redEnvelope/redEnvelope",
 		    "style" : {
 				"navigationBarTitleText":"抢红包测试"
+			}
+		},
+		{
+		    "path" : "pages/memoryTraining/memoryTraining",
+		    "style" : {
+				"navigationBarTitleText":"快速记忆训练"
 			}
 		},
 		{

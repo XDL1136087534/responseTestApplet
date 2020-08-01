@@ -78,7 +78,7 @@
 			stopTimer: function(){
 				this.showRedEnvelope = false;
 				this.endTime = new Date().getTime();
-				this.speed = this.endTime - this.showTime - 350;
+				this.speed = this.endTime - this.showTime;
 				if(this.speed < this.qualifiedTime){   // 测试合格则坚持的轮数加一
 					this.qualified++;
 					var space = (50 - (this.qualified - 1) * 5) < 30 ? 30 : (50 - (this.qualified - 1) * 5);

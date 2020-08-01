@@ -1,8 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/memoryTraining/memoryTraining",
     "pages/redEnvelope/redEnvelope",
+    "pages/memoryTraining/memoryTraining",
     "pages/distinguishColor/distinguishColor"
   ],
   "subPackages": [],
