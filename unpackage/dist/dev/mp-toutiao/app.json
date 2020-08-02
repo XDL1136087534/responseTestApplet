@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/redEnvelope/redEnvelope",
     "pages/memoryTraining/memoryTraining",
-    "pages/distinguishColor/distinguishColor"
+    "pages/distinguishColor/distinguishColor",
+    "pages/reverseThinking/reverseThinking"
   ],
   "subPackages": [],
   "window": {

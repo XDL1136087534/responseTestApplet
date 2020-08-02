@@ -33,7 +33,7 @@
 					 <view style="color:rgb(251, 227, 43);font-size: 20px;">测试不合格</view>
 					 <view style="margin-top: 20rpx;font-size: 35rpx;">当前合格时间:{{qualifiedTime}}ms</view>
 					 <view style="font-size: 20px;">您成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
-					 <button class="resurrection" @click="start" type="default">复活挑战</button>
+					 <button class="resurrection" @click="resurrectionPlay" type="default">复活挑战({{freeResurrection}})</button>
 					 <button class="reset" @click="reset" type="default">重新挑战</button>
 				 </view>
 			 </view>
@@ -50,14 +50,20 @@
 				awit_flag: true,     // 等待红包出现
 				redEnvelopeLocationTop: 0,    // 红包的位置
 				redEnvelopeLocationLeft: 0,
-				qualifiedTime: 500,  // 合格时间
+				qualifiedTime: 800,  // 合格时间
 				futureQualifiedTime: 500,   // 下一次的合格时间
 				showRedEnvelope: false,    // 红包是否已出现
 				showTime: 0,    // 红包出现的时间
 				endTime: 0,     // 红包被点击的时间
 				speed: 0,    // 测试的速度
+				freeResurrection: 0,   // 免费复活次数
 				qualified: 0   // 坚持的次数
 			};
+		},
+		onLoad() {
+			// 获取免费复活次数
+			var data = uni.getStorageSync('freeResurrection');
+			this.freeResurrection = data.one_num;
 		},
 		methods:{
 			start: function(){
@@ -81,8 +87,8 @@
 				this.speed = this.endTime - this.showTime;
 				if(this.speed < this.qualifiedTime){   // 测试合格则坚持的轮数加一
 					this.qualified++;
-					var space = (50 - (this.qualified - 1) * 5) < 30 ? 30 : (50 - (this.qualified - 1) * 5);
-					this.futureQualifiedTime = this.qualifiedTime - space;   // 以50-30间距缩小合格时间
+					// 以50间距缩小合格时间  100ms为最终值
+					this.futureQualifiedTime = (this.qualifiedTime - 50)<100?100:(this.qualifiedTime - 50);
 				}
 			},
 			
@@ -92,10 +98,28 @@
 				this.start();
 			},
 			
+			// 复活继续
+			resurrectionPlay: function(){
+				if(this.freeResurrection > 0){
+					this.freeResurrection--;
+					var data = uni.getStorageSync('freeResurrection');
+					data.one_num = this.freeResurrection;
+					uni.setStorageSync('freeResurrection', data);
+					this.start();
+				}
+				else
+					uni.showToast({
+						title: '播放广告',
+						icon: 'none',
+						mask: true,
+						duration: 2000
+					});
+			},
+			
 			// 重新开始游戏
 			reset: function(){
 				this.qualified = 0;
-				this.qualifiedTime = 500;
+				this.qualifiedTime = 800;
 				this.start();
 			}
 		}
@@ -148,9 +172,9 @@ image:first-of-type{
 		margin: -300rpx 20rpx;
 		.resurrection{
 			position: relative;
-			top: 280rpx;
-			left: -140rpx;
-			width: 220rpx;
+			top: 285rpx;
+			left: -160rpx;
+			width: 260rpx;
 			background-color: #87f70e;
 		}
 		.reset{

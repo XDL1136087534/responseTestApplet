@@ -6,6 +6,7 @@
   position: absolute;
   top: 15%;
   left: 20%;
+  text-align: center;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;

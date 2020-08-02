@@ -21,7 +21,7 @@
 				<view class="result_title">挑战失败!</view>
 				<view class="result_prompt">您成功挑战<text style="font-size: 50rpx;color: #ff0289">{{qualified}}</text>轮</view>
 				<view class="buttons">
-					<button type="default" @click="resurrectionPlay" id="resurrection_btn">复活继续</button>
+					<button type="default" @click="resurrectionPlay" id="resurrection_btn">复活继续({{freeResurrection}})</button>
 					<button type="default" @click="resetPlay" id="reset_btn">重新开始</button>
 				</view>
 			</block>
@@ -40,8 +40,14 @@
 				colorDifference: 30,  // 颜色差异值
 				currentDifferenceIndex: 0,   // 当前不同颜色的方块下标
 				isCorrect: null,  // 是否正确
+				freeResurrection: 0, // 免费复活次数
 				qualified: 0,  // 当前坚持的次数
 			};
+		},
+		onLoad() {
+			// 获取免费复活次数
+			var data = uni.getStorageSync('freeResurrection');
+			this.freeResurrection = data.four_num;
 		},
 		methods:{
 			start: function(){
@@ -101,9 +107,22 @@
 			
 			// 复活继续
 			resurrectionPlay: function(){
-				this.start_flag = false;
-				this.isCorrect = null;
-				this.start();
+				if(this.freeResurrection > 0){
+					this.freeResurrection--;
+					var data = uni.getStorageSync('freeResurrection');
+					data.two_num = this.freeResurrection;
+					uni.setStorageSync('freeResurrection', data);
+					this.start_flag = false;
+					this.isCorrect = null;
+					this.start();
+				}
+				else
+					uni.showToast({
+						title: '播放广告',
+						icon: 'none',
+						mask: true,
+						duration: 2000
+					});
 			},
 			
 			// 重新开始

@@ -32,7 +32,7 @@
 			</navigator>
 			<view class="boder" style="background-color: rgb(240, 186, 42);"></view>
 			
-			<navigator>
+			<navigator url="../reverseThinking/reverseThinking">
 				<view class="unit">
 					<view class="icon">
 						<image src="https://yanxuan.nosdn.127.net/8c176fd0fdececc4f9493d4a36842ecd.jpg"></image>
@@ -71,7 +71,14 @@
 			}
 		},
 		onLoad() {
-
+			var date = new Date();
+			console.log(date.getDate())
+			var currentDate = date.getDate();   // 获取当前日
+			var yesterdayDate = uni.getStorageSync('yesterdayDate')?uni.getStorageSync('yesterdayDate'):null;
+			if(yesterdayDate === null || yesterdayDate < currentDate){   // 新用户或已是新的一天，则有三次免费复活机会
+				uni.setStorageSync('freeResurrection', {one_num: 3, two_num: 3, three_num: 3, four_num: 3});
+				uni.setStorageSync('yesterdayDate', currentDate);   // 把当前日作为明天的昨天
+			}
 		},
 		methods: {
 

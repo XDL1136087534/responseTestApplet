@@ -50,7 +50,7 @@
   color: white;
 }
 .start .time-schedule {
-  margin: 60rpx 40rpx;
+  margin: 60rpx 0rpx;
 }
 .start .time-schedule .sum-schedule {
   width: 500rpx;
@@ -125,7 +125,7 @@
   position: relative;
   top: 195rpx;
   left: -140rpx;
-  width: 220rpx;
+  width: 250rpx;
   background-color: #87f70e;
 }
 .start .answer .reset {

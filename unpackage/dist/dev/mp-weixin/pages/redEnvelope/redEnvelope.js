@@ -1,9 +1,9 @@
 (global["webpackJsonp"] = global["webpackJsonp"] || []).push([["pages/redEnvelope/redEnvelope"],{
 
 /***/ 19:
-/*!**************************************************************************************!*\
-  !*** D:/desktop/zm/uni_app/小游戏/main.js?{"page":"pages%2FredEnvelope%2FredEnvelope"} ***!
-  \**************************************************************************************/
+/*!*****************************************************************************************************!*\
+  !*** D:/desktop/zm/uni_app/responseTestApplet/main.js?{"page":"pages%2FredEnvelope%2FredEnvelope"} ***!
+  \*****************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -17,9 +17,9 @@ createPage(_redEnvelope.default);
 /***/ }),
 
 /***/ 20:
-/*!*******************************************************************!*\
-  !*** D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue ***!
-  \*******************************************************************/
+/*!**********************************************************************************!*\
+  !*** D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -58,9 +58,9 @@ component.options.__file = "pages/redEnvelope/redEnvelope.vue"
 /***/ }),
 
 /***/ 21:
-/*!**************************************************************************************************!*\
-  !*** D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue?vue&type=template&id=a1f87bec& ***!
-  \**************************************************************************************************/
+/*!*****************************************************************************************************************!*\
+  !*** D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue?vue&type=template&id=a1f87bec& ***!
+  \*****************************************************************************************************************/
 /*! exports provided: render, staticRenderFns, recyclableRender, components */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -80,9 +80,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 22:
-/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue?vue&type=template&id=a1f87bec& ***!
-  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--16-0!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/template.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-uni-app-loader/page-meta.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue?vue&type=template&id=a1f87bec& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns, recyclableRender, components */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -107,9 +107,9 @@ render._withStripped = true
 /***/ }),
 
 /***/ 23:
-/*!********************************************************************************************!*\
-  !*** D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************/
+/*!***********************************************************************************************************!*\
+  !*** D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -123,14 +123,14 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 24:
-/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--12-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; //
 //
 //
 //
@@ -182,14 +182,20 @@ var _default =
       awit_flag: true, // 等待红包出现
       redEnvelopeLocationTop: 0, // 红包的位置
       redEnvelopeLocationLeft: 0,
-      qualifiedTime: 500, // 合格时间
+      qualifiedTime: 800, // 合格时间
       futureQualifiedTime: 500, // 下一次的合格时间
       showRedEnvelope: false, // 红包是否已出现
       showTime: 0, // 红包出现的时间
       endTime: 0, // 红包被点击的时间
       speed: 0, // 测试的速度
+      freeResurrection: 0, // 免费复活次数
       qualified: 0 // 坚持的次数
     };
+  },
+  onLoad: function onLoad() {
+    // 获取免费复活次数
+    var data = uni.getStorageSync('freeResurrection');
+    this.freeResurrection = data.one_num;
   },
   methods: {
     start: function start() {var _this = this;
@@ -210,11 +216,11 @@ var _default =
     stopTimer: function stopTimer() {
       this.showRedEnvelope = false;
       this.endTime = new Date().getTime();
-      this.speed = this.endTime - this.showTime - 350;
+      this.speed = this.endTime - this.showTime;
       if (this.speed < this.qualifiedTime) {// 测试合格则坚持的轮数加一
         this.qualified++;
-        var space = 50 - (this.qualified - 1) * 5 < 30 ? 30 : 50 - (this.qualified - 1) * 5;
-        this.futureQualifiedTime = this.qualifiedTime - space; // 以50-30间距缩小合格时间
+        // 以50间距缩小合格时间  100ms为最终值
+        this.futureQualifiedTime = this.qualifiedTime - 50 < 100 ? 100 : this.qualifiedTime - 50;
       }
     },
 
@@ -224,19 +230,38 @@ var _default =
       this.start();
     },
 
+    // 复活继续
+    resurrectionPlay: function resurrectionPlay() {
+      if (this.freeResurrection > 0) {
+        this.freeResurrection--;
+        var data = uni.getStorageSync('freeResurrection');
+        data.one_num = this.freeResurrection;
+        uni.setStorageSync('freeResurrection', data);
+        this.start();
+      } else
+
+      uni.showToast({
+        title: '播放广告',
+        icon: 'none',
+        mask: true,
+        duration: 2000 });
+
+    },
+
     // 重新开始游戏
     reset: function reset() {
       this.qualified = 0;
-      this.qualifiedTime = 500;
+      this.qualifiedTime = 800;
       this.start();
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 
 /***/ 25:
-/*!*****************************************************************************************************!*\
-  !*** D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue?vue&type=style&index=0&lang=less& ***!
-  \*****************************************************************************************************/
+/*!********************************************************************************************************************!*\
+  !*** D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue?vue&type=style&index=0&lang=less& ***!
+  \********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -250,9 +275,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 26:
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--10-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--10-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--10-oneOf-1-2!./node_modules/postcss-loader/src??ref--10-oneOf-1-3!./node_modules/less-loader/dist/cjs.js??ref--10-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--10-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/desktop/zm/uni_app/小游戏/pages/redEnvelope/redEnvelope.vue?vue&type=style&index=0&lang=less& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/mini-css-extract-plugin/dist/loader.js??ref--10-oneOf-1-0!./node_modules/css-loader/dist/cjs.js??ref--10-oneOf-1-1!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--10-oneOf-1-2!./node_modules/postcss-loader/src??ref--10-oneOf-1-3!./node_modules/less-loader/dist/cjs.js??ref--10-oneOf-1-4!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--10-oneOf-1-5!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!D:/desktop/zm/uni_app/responseTestApplet/pages/redEnvelope/redEnvelope.vue?vue&type=style&index=0&lang=less& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

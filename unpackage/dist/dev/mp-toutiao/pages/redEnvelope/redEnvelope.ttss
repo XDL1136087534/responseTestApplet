@@ -37,9 +37,9 @@ image:first-of-type {
 }
 .start .result .resurrection {
   position: relative;
-  top: 280rpx;
-  left: -140rpx;
-  width: 220rpx;
+  top: 285rpx;
+  left: -160rpx;
+  width: 260rpx;
   background-color: #87f70e;
 }
 .start .result .reset {

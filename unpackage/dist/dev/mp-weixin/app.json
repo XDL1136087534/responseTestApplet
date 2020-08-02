@@ -1,9 +1,10 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/memoryTraining/memoryTraining",
     "pages/redEnvelope/redEnvelope",
-    "pages/distinguishColor/distinguishColor"
+    "pages/memoryTraining/memoryTraining",
+    "pages/distinguishColor/distinguishColor",
+    "pages/reverseThinking/reverseThinking"
   ],
   "subPackages": [],
   "window": {
@@ -12,5 +13,6 @@
     "navigationBarBackgroundColor": "#73edff",
     "backgroundColor": "#eeeeee"
   },
-  "usingComponents": {}
+  "usingComponents": {},
+  "sitemapLocation": "sitemap21.json"
 }

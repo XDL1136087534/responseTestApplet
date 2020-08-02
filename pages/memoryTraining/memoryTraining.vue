@@ -41,7 +41,7 @@
 						<view>正确答案:<text style="font-size: 40rpx;color: #007AFF">{{value}}</text></view>
 						<view>您的答案:<text style="font-size: 40rpx;color: #ff9e02">{{inputValue}}</text></view>
 						<view>您成功坚持<text style="font-size: 45rpx;color: #ff0289">{{qualified}}</text>轮</view>
-						<button @click="resurrectionPlay" class="resurrection" type="default">复活继续</button>
+						<button @click="resurrectionPlay" class="resurrection" type="default">复活继续({{freeResurrection}})</button>
 						<button @click="resetPlay" class="reset" type="default">重新开始</button>
 					</block>
 				</view>
@@ -67,8 +67,14 @@
 				isCorrect: null,   // 回答是否正确, 为空表示不暂时不显示
 				duplicateFlag: 0,   // 每一个长度重复3次 
 				stringLength: 4,   // 题目的长度
+				freeResurrection: 0, // 免费复活次数
 				qualified: 0,  // 当前坚持的次数
 			};
+		},
+		onLoad() {
+			// 获取免费复活次数
+			var data = uni.getStorageSync('freeResurrection');
+			this.freeResurrection = data.two_num;
 		},
 		methods:{
 			// 开始游戏
@@ -144,15 +150,28 @@
 			
 			// 复活继续
 			resurrectionPlay: function(){
-				// 还原属性值
-				this.value = '';
-				this.inputValue = '';
-				this.start_flag = false;
-				this.isCorrect = null;
-				this.memory_flag = true;
-				this.currentSchedule = 500;
-				this.time = 5;
-				this.background_color = 'rgb(137, 217, 254)';
+				if(this.freeResurrection > 0){
+					this.freeResurrection--;
+					var data = uni.getStorageSync('freeResurrection');
+					data.two_num = this.freeResurrection;
+					uni.setStorageSync('freeResurrection', data);
+					// 还原属性值
+					this.value = '';
+					this.inputValue = '';
+					this.start_flag = false;
+					this.isCorrect = null;
+					this.memory_flag = true;
+					this.currentSchedule = 500;
+					this.time = 5;
+					this.background_color = 'rgb(137, 217, 254)';
+				}
+				else
+					uni.showToast({
+						title: '播放广告',
+						icon: 'none',
+						mask: true,
+						duration: 2000
+					});
 			},
 			
 			// 重新开始
@@ -308,7 +327,7 @@
 			position: relative;
 			top: 195rpx;
 			left: -140rpx;
-			width: 220rpx;
+			width: 250rpx;
 			background-color: #87f70e;
 		}
 		.reset{
