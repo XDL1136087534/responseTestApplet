@@ -32,7 +32,7 @@
 			</navigator>
 			<view class="boder" style="background-color: rgb(240, 186, 42);"></view>
 			
-			<navigator url="../reverseThinking/reverseThinking">
+			<navigator>
 				<view class="unit">
 					<view class="icon">
 						<image src="https://yanxuan.nosdn.127.net/8c176fd0fdececc4f9493d4a36842ecd.jpg"></image>

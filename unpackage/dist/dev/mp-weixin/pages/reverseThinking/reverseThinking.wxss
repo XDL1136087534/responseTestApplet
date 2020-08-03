@@ -6,4 +6,12 @@ view {
   width: 300rpx;
   height: 300rpx;
 }
+canvas {
+  position: fixed;
+  top: 60%;
+  left: 27%;
+  width: 350rpx;
+  height: 350rpx;
+  background-color: pink;
+}
 

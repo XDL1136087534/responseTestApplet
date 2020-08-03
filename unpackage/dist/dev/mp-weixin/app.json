@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/reverseThinking/reverseThinking",
     "pages/index/index",
     "pages/redEnvelope/redEnvelope",
     "pages/memoryTraining/memoryTraining",
-    "pages/distinguishColor/distinguishColor",
-    "pages/reverseThinking/reverseThinking"
+    "pages/distinguishColor/distinguishColor"
   ],
   "subPackages": [],
   "window": {
@@ -14,5 +14,5 @@
     "backgroundColor": "#eeeeee"
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap21.json"
+  "sitemapLocation": "sitemap36.json"
 }

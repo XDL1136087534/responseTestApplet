@@ -1,1 +1,1 @@
-<view class="background"><canvas style="width:300px;height:200px;" canvas-id="firstCanvas"></canvas></view>
+<view class="background"><canvas canvas-id="Canvas"></canvas><button data-event-opts="{{[['tap',[['start',['$event']]]]]}}" bindtap="__e">开始</button></view>

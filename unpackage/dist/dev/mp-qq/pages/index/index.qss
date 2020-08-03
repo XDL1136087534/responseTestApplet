@@ -1,0 +1,56 @@
+.content {
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  right: 10rpx;
+  bottom: 10rpx;
+  background-color: #b3f19b;
+}
+.unit {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 630rpx;
+  height: 250rpx;
+  margin: 30rpx 40rpx;
+  background-color: white;
+}
+.unit .icon {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.unit .icon image {
+  width: 100px;
+  height: 100px;
+}
+.unit .title {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+          flex: 1;
+}
+.unit .title .title-top {
+  text-align: center;
+  margin: 50rpx 0;
+}
+.unit .title .title-bottom {
+  font-size: 12px;
+  text-align: center;
+}
+.boder {
+  position: relative;
+  left: 40rpx;
+  width: 630rpx;
+  height: 8rpx;
+}
+

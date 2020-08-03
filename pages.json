@@ -8,6 +8,12 @@
 			}
 		},
 		{
+		    "path" : "pages/reverseThinking/reverseThinking",
+		    "style" : {
+				"navigationBarTitleText":"逆向思维训练"
+			}
+		},
+		{
 		    "path" : "pages/redEnvelope/redEnvelope",
 		    "style" : {
 				"navigationBarTitleText":"抢红包测试"
@@ -25,12 +31,6 @@
 				"navigationBarTitleText":"视觉训练测试"
 			}
 		}
-        ,{
-            "path" : "pages/reverseThinking/reverseThinking",
-            "style" : {
-				"navigationBarTitleText":"逆向思维训练"
-			}
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
