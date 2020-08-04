@@ -1,17 +1,87 @@
 .background {
-  width: 400rpx;
-  height: 1500rpx;
+  width: 750rpx;
+  height: 1400rpx;
+  background-color: #aaaaff;
 }
-view {
+.init {
+  position: fixed;
+  top: 15%;
+  left: 10%;
+  width: 600rpx;
+  height: 950rpx;
+}
+.init .icon {
+  position: relative;
+  left: 25%;
   width: 300rpx;
   height: 300rpx;
 }
-canvas {
-  position: fixed;
-  top: 60%;
+.init .content {
+  margin-top: 70rpx;
+  font-size: 40rpx;
+  text-align: center;
+  color: white;
+}
+.init .content view {
+  margin-top: 30rpx;
+}
+.init .content text {
+  position: absolute;
+  top: 95%;
+  left: 23%;
+}
+.startPlay_box {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.startPlay_box canvas {
+  position: absolute;
+  top: 10%;
   left: 27%;
   width: 350rpx;
   height: 350rpx;
-  background-color: pink;
+}
+.startPlay_box text {
+  position: absolute;
+  top: 45%;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: white;
+}
+.startPlay_box .buttons {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-around;
+          justify-content: space-around;
+  position: absolute;
+  top: 65%;
+  width: 750rpx;
+}
+.startPlay_box .buttons view {
+  width: 100rpx;
+  height: 100rpx;
+  font-size: 60rpx;
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  border: 5rpx solid white;
+}
+.startPlay_box .buttons .yes_btn {
+  background-color: #00ff00;
+}
+.startPlay_box .buttons .no_btn {
+  background-color: #ff557f;
 }
 

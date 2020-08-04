@@ -2,15 +2,15 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "应急反应训练"
-			}
-		},
-		{
 		    "path" : "pages/reverseThinking/reverseThinking",
 		    "style" : {
 				"navigationBarTitleText":"逆向思维训练"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "应急反应训练"
 			}
 		},
 		{

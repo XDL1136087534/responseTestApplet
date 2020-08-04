@@ -1,8 +1,24 @@
 <template>
-	<view class="background">
+	<view class="background" @click="startPlay">
 		
-		<canvas canvas-id="Canvas"></canvas>
-		<button @click="start">开始</button>
+		<view v-if="start_flag===false" class="init">
+			<view class="icon">
+				<canvas canvas-id="Canvas-init"></canvas>
+			</view>
+			<view class="content">
+				<view>锻炼逆向思维</view>
+				<view>成为极少数的成功者</view>
+				<text>单击任意位置开始</text>
+			</view>
+		</view>
+		<view v-else class="startPlay_box">
+			<canvas canvas-id="Canvas-startPlay"></canvas>
+			<text>{{currentShape}}</text>
+			<view class="buttons">
+				<view @click="judgeIsCorrect(true)" class="yes_btn">√</view>
+				<view @click="judgeIsCorrect(false)" class="no_btn">×</view>
+			</view>
+		</view>
 		
 	</view>
 </template>
@@ -11,24 +27,81 @@
 	export default {
 		data() {
 			return {
+				start_flag: false, // 开始标记
 				canvasWidth: 350,
 				canvasHeight: 350,
 				shapeList: ['Square', 'Circle', 'Rectangle', 'RegularPolygon'],
 				colorList: ['white', 'red', 'blue', 'green', 'purple', 'yellow'],
 				currentShape: null,
-				pen: uni.createCanvasContext('Canvas')
+				pen: uni.createCanvasContext('Canvas-startPlay')    // 画笔
 			};
 		},
 		onReady: function (e) {
-		        // this.start();
+		    this.iconInit();
 		},
 		methods:{
-			start: function(){
-				this.pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight);   // 清理画布
-				var shape = this.shapeList[Math.floor(Math.random() * this.shapeList.length)];  // 选取形状
-				var color = this.colorList[Math.floor(Math.random() * this.colorList.length)];  // 选取颜色
-				eval('this.draw'+shape+'(color)');
-				// this.drawRegularPolygon(color);
+			// 页面图标初始化
+			iconInit: function(){
+				var pen = uni.createCanvasContext('Canvas-init');
+				
+				pen.beginPath();
+				pen.setStrokeStyle("#ffaa7f");
+				pen.setLineWidth(2);
+				pen.arc(75, 75, 60, 0, 2 * Math.PI);
+				pen.stroke();
+				pen.closePath();
+				
+				
+				pen.beginPath();
+				pen.moveTo(95, 75);
+				pen.setStrokeStyle("#ffaaff");
+				pen.arc(75, 75, 20, 0, 2 * Math.PI);
+				pen.stroke();
+				pen.closePath()
+				
+				pen.beginPath();
+				pen.setStrokeStyle('#ffffff');
+				pen.moveTo(75, 15);
+				pen.lineTo(20, 97);
+				pen.lineTo(130, 97);
+				pen.lineTo(75, 15);
+				pen.stroke();
+				pen.closePath();
+				
+				pen.draw();
+			},
+			
+			startPlay: function(){
+				if(this.start_flag===false){
+					this.start_flag = true;
+					this.pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight);   // 清理画布
+					var shape = this.shapeList[Math.floor(Math.random() * this.shapeList.length)];  // 选取形状
+					var color = this.colorList[Math.floor(Math.random() * this.colorList.length)];  // 选取颜色
+					this.currentShape = color + "的" + shape;
+					// 根据形状与颜色绘制图形
+					switch(shape){
+						case 'Square': 
+							this.drawSquare(color);
+							this.currentShape = color + "的正方形";
+							break;
+						case 'Circle': 
+							this.drawCircle(color);
+							this.currentShape = color + "的圆形";
+							break;
+						case 'Rectangle': 
+							this.drawRectangle(color);
+							this.currentShape = color + "的长方形";
+							break;
+						case 'RegularPolygon': 
+							this.drawRegularPolygon(color);
+							this.currentShape = color + "的多边形";
+					}
+				}
+			},
+			
+			// 判断正确与否
+			judgeIsCorrect: function( ){
+				
 			},
 			
 			// 圆形
@@ -82,6 +155,7 @@
 				this.pen.draw();
 			},
 			
+			// 连接正多边形的点
 			createPolygonPath: function(centerX,centerY,radius,sides,startAngle) {
 			    let points = this.getPolygonPoints(centerX,centerY,radius,sides,startAngle);
 			
@@ -94,6 +168,7 @@
 			    this.pen.closePath();
 			},
 			
+			// 得到正多边形的点
 			getPolygonPoints: function(centerX,centerY,radius,sides,startAngle) {
 				class Point{
 				    constructor(x, y) {
@@ -117,25 +192,87 @@
 </script>
 
 <style lang="less">
+	
+*{
+	margin: 0;
+	padding: 0;
+}
 
 .background{
-	width: 400rpx;
-	height: 1500rpx;
-	// background-color: green;
+	width: 750rpx;
+	height: 1400rpx;
+	background-color: #aaaaff;
 }
 
-view{
-	width: 300rpx;
-	height: 300rpx;
-}
-
-canvas{
+.init{
 	position: fixed;
-	top: 60%;
-	left: 27%;
-	width: 350rpx;
-	height: 350rpx;
-	background-color: pink;
+	top: 15%;
+	left: 10%;
+	width: 600rpx;
+	height: 950rpx;
+	.icon{
+		position: relative;
+		left: 25%;
+		width: 300rpx;
+		height: 300rpx;
+	}
+	.content{
+		margin-top: 70rpx;
+		font-size: 40rpx;
+		text-align: center;
+		color: white;
+		view{
+			margin-top: 30rpx;
+		}
+		text{
+			position: absolute;
+			top: 95%;
+			left: 23%;
+		}
+	}
 }
+
+.startPlay_box{
+	display: flex;
+	justify-content: center;
+	canvas{
+		position: absolute;
+		top: 10%;
+		left: 27%;
+		width: 350rpx;
+		height: 350rpx;
+	}
+	text{
+		position: absolute;
+		top: 45%;
+		font-size: 40rpx;
+		font-weight: bold;
+		color: white;
+	}
+	.buttons{
+		display: flex;
+		justify-content: space-around;
+		position: absolute;
+		top: 65%;
+		width: 750rpx;
+		view{
+			width: 100rpx;
+			height: 100rpx;
+			font-size: 60rpx;
+			border-radius: 50%;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			border: 5rpx solid white;
+		}
+		.yes_btn{
+			background-color: #00ff00;
+		}
+		.no_btn{
+			background-color: #ff557f;
+		}
+	}
+}
+
 
 </style>

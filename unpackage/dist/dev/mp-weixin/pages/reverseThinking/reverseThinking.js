@@ -144,28 +144,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
     return {
+      start_flag: false, // 开始标记
       canvasWidth: 350,
       canvasHeight: 350,
       shapeList: ['Square', 'Circle', 'Rectangle', 'RegularPolygon'],
       colorList: ['white', 'red', 'blue', 'green', 'purple', 'yellow'],
       currentShape: null,
-      pen: uni.createCanvasContext('Canvas') };
-
+      pen: uni.createCanvasContext('Canvas-startPlay') // 画笔
+    };
   },
   onReady: function onReady(e) {
-    // this.start();
+    this.iconInit();
   },
   methods: {
-    start: function start() {
-      this.pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight); // 清理画布
-      var shape = this.shapeList[Math.floor(Math.random() * this.shapeList.length)]; // 选取形状
-      var color = this.colorList[Math.floor(Math.random() * this.colorList.length)]; // 选取颜色
-      eval('this.draw' + shape + '(color)');
-      // this.drawRegularPolygon(color);
+    // 页面图标初始化
+    iconInit: function iconInit() {
+      var pen = uni.createCanvasContext('Canvas-init');
+
+      pen.beginPath();
+      pen.setStrokeStyle("#ffaa7f");
+      pen.setLineWidth(2);
+      pen.arc(75, 75, 60, 0, 2 * Math.PI);
+      pen.stroke();
+      pen.closePath();
+
+
+      pen.beginPath();
+      pen.moveTo(95, 75);
+      pen.setStrokeStyle("#ffaaff");
+      pen.arc(75, 75, 20, 0, 2 * Math.PI);
+      pen.stroke();
+      pen.closePath();
+
+      pen.beginPath();
+      pen.setStrokeStyle('#ffffff');
+      pen.moveTo(75, 15);
+      pen.lineTo(20, 97);
+      pen.lineTo(130, 97);
+      pen.lineTo(75, 15);
+      pen.stroke();
+      pen.closePath();
+
+      pen.draw();
+    },
+
+    startPlay: function startPlay() {
+      if (this.start_flag === false) {
+        this.start_flag = true;
+        this.pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight); // 清理画布
+        var shape = this.shapeList[Math.floor(Math.random() * this.shapeList.length)]; // 选取形状
+        var color = this.colorList[Math.floor(Math.random() * this.colorList.length)]; // 选取颜色
+        // 根据形状与颜色绘制图形
+        switch (shape) {
+          case 'Square':this.drawSquare(color);break;
+          case 'Circle':this.drawCircle(color);break;
+          case 'Rectangle':this.drawRectangle(color);break;
+          case 'RegularPolygon':this.drawRegularPolygon(color);}
+
+      }
+    },
+
+    // 判断正确与否
+    judgeIsCorrect: function judgeIsCorrect() {
+
     },
 
     // 圆形
@@ -219,6 +280,7 @@ var _default =
       this.pen.draw();
     },
 
+    // 连接正多边形的点
     createPolygonPath: function createPolygonPath(centerX, centerY, radius, sides, startAngle) {
       var points = this.getPolygonPoints(centerX, centerY, radius, sides, startAngle);
 
@@ -231,6 +293,7 @@ var _default =
       this.pen.closePath();
     },
 
+    // 得到正多边形的点
     getPolygonPoints: function getPolygonPoints(centerX, centerY, radius, sides, startAngle) {var
       Point =
       function Point(x, y) {_classCallCheck(this, Point);

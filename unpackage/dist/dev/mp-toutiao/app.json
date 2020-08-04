@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/reverseThinking/reverseThinking",
+    "pages/index/index",
     "pages/redEnvelope/redEnvelope",
     "pages/memoryTraining/memoryTraining",
     "pages/distinguishColor/distinguishColor"
