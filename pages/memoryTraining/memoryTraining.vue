@@ -33,7 +33,7 @@
 					</block>
 					<block v-else-if="isCorrect===true">
 						<text style="font-size: 70rpx; color: #00a8f0;">回答正确</text>
-						<view>您已成功坚持{{qualified}}轮</view>
+						<view>您已成功坚持<text style="font-size: 45rpx;color: #ff0289">{{qualified}}</text>轮</view>
 						<button class="continue" @click="continuePlay">点击继续</button>
 					</block>
 					<block v-else>

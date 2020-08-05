@@ -1,5 +1,5 @@
 <template>
-	<view class="background" @click="startPlay">
+	<view class="background" @click="startPlay" v-bind:style="{ 'background-color': background_color}">
 		
 		<view v-if="start_flag===false" class="init">
 			<view class="icon">
@@ -12,12 +12,38 @@
 			</view>
 		</view>
 		<view v-else class="startPlay_box">
-			<canvas canvas-id="Canvas-startPlay"></canvas>
-			<text>{{currentShape}}</text>
-			<view class="buttons">
-				<view @click="judgeIsCorrect(true)" class="yes_btn">√</view>
-				<view @click="judgeIsCorrect(false)" class="no_btn">×</view>
-			</view>
+			<block v-if="answer_flag===true">
+				<canvas canvas-id="Canvas-startPlay"></canvas>
+				<view class="time-schedule">
+					<view class="sum-schedule" ></view>
+					<view class="current-schedule" v-bind:style="{ width: currentSchedule + 'rpx'}"></view>
+				</view>
+				<view class="time-num">倒计时：{{time}}s</view>
+				<text>{{showShape}}</text>
+				<view class="buttons">
+					<view @click="judgeIsCorrect(true)" class="yes_btn">√</view>
+					<view @click="judgeIsCorrect(false)" class="no_btn">×</view>
+				</view>
+			</block>
+			<block v-else>
+				<block v-if="result===true">
+					<view class="result">
+						<view style="color: #007AFF">回答正确</view>
+						<view>您已成功坚持{{qualified}}轮</view>
+						<button class="continue" @click="continuePlay">点击继续</button>
+					</view>
+				</block>
+				<block v-else>
+					<view class="result">
+						<view style="color: #ff557f">回答错误</view>
+						<view>您成功坚持{{qualified}}轮</view>
+						<view class="buttons">
+							<button @click="resurrectionPlay" class="resurrection" type="default">复活继续({{freeResurrection}})</button>
+							<button @click="resetPlay" class="reset" type="default">重新开始</button>
+						</view>
+					</view>
+				</block>
+			</block>
 		</view>
 		
 	</view>
@@ -28,13 +54,29 @@
 		data() {
 			return {
 				start_flag: false, // 开始标记
+				answer_flag: false,  // 答题标记
+				background_color: 'rgb(170, 170, 255)',
 				canvasWidth: 350,
 				canvasHeight: 350,
+				time: 5,  // 答题时间
+				timer: null, // 计时器
+				currentSchedule: 500,   // 进度条长度
 				shapeList: ['Square', 'Circle', 'Rectangle', 'RegularPolygon'],
 				colorList: ['white', 'red', 'blue', 'green', 'purple', 'yellow'],
-				currentShape: null,
-				pen: uni.createCanvasContext('Canvas-startPlay')    // 画笔
+				chineseShapeList: ['正方形', '圆形', '长方形', '多边形'],
+				chineseColorList: ['白色', '红色', '蓝色', '绿色', '紫色', '黄色'],
+				currentShape: null,  // 真实的图形
+				showShape: null,     // 用户看到的题目
+				pen: uni.createCanvasContext('Canvas-startPlay'),    // 画笔
+				result: null,   // 用户结果正确与否
+				freeResurrection: null,
+				qualified: 0
 			};
+		},
+		onLoad() {
+			// 获取免费复活次数
+			var data = uni.getStorageSync('freeResurrection');
+			this.freeResurrection = data.three_num;
 		},
 		onReady: function (e) {
 		    this.iconInit();
@@ -74,34 +116,105 @@
 			startPlay: function(){
 				if(this.start_flag===false){
 					this.start_flag = true;
+					this.answer_flag = true;
+					this.Timer();   // 开始倒计时
 					this.pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight);   // 清理画布
-					var shape = this.shapeList[Math.floor(Math.random() * this.shapeList.length)];  // 选取形状
-					var color = this.colorList[Math.floor(Math.random() * this.colorList.length)];  // 选取颜色
-					this.currentShape = color + "的" + shape;
+					var shapeDetailList = this.produceShape();   // 随机生成图形
+					var color = shapeDetailList[0];
+					var shape = shapeDetailList[1];
+					var englishColor = shapeDetailList[2];
+					var englishShape = shapeDetailList[3];
+					this.currentShape = color + '的' + shape;   // 当前正确的图形
 					// 根据形状与颜色绘制图形
 					switch(shape){
-						case 'Square': 
-							this.drawSquare(color);
-							this.currentShape = color + "的正方形";
+						case '正方形': 
+							this.drawSquare(englishColor);
 							break;
-						case 'Circle': 
-							this.drawCircle(color);
-							this.currentShape = color + "的圆形";
+						case '圆形': 
+							this.drawCircle(englishColor);
 							break;
-						case 'Rectangle': 
-							this.drawRectangle(color);
-							this.currentShape = color + "的长方形";
+						case '长方形': 
+							this.drawRectangle(englishColor);
 							break;
-						case 'RegularPolygon': 
-							this.drawRegularPolygon(color);
-							this.currentShape = color + "的多边形";
+						case '多边形': 
+							this.drawRegularPolygon(englishColor);
+					}
+					// 随机生成正确或错误的题目
+					if(Math.random() < 0.55){   // 理论上错误的题目 
+						shapeDetailList = this.produceShape();
+						this.showShape = shapeDetailList[0] + '的' + shapeDetailList[1];
+					}
+					else{   // 正确的题目
+						this.showShape = this.currentShape;
 					}
 				}
 			},
 			
+			// 计时器
+			Timer: function(){
+				this.timer = setInterval(()=>{
+					var time = this.time * 1000 - 100;
+					this.time = (time / 1000).toFixed(1);
+					this.currentSchedule = this.currentSchedule - 10;
+					if(this.currentSchedule === 0){   // 超时
+						clearInterval(this.timer);
+						this.answer_flag = false;
+						this.result = false;
+						this.background_color = 'rgb(243, 223, 187)';
+					}
+				}, 100);
+			},
+			
+			// 随机生成图形
+			produceShape: function(){
+				var shapeIndex = Math.floor(Math.random() * this.chineseShapeList.length);
+				var shape = this.chineseShapeList[shapeIndex];  // 选取形状
+				var colorIndex = Math.floor(Math.random() * this.chineseColorList.length);
+				var color = this.chineseColorList[colorIndex];  // 选取颜色
+				var englishShape = this.shapeList[shapeIndex];
+				var englishColor = this.colorList[colorIndex];
+				return [color, shape, englishColor, englishShape];
+			},
+			
 			// 判断正确与否
-			judgeIsCorrect: function( ){
-				
+			judgeIsCorrect: function(userChoose){
+				this.answer_flag = false;
+				this.background_color = 'rgb(243, 229, 230)';
+				clearInterval(this.timer);  // 停止倒计时
+				if((this.currentShape === this.showShape) === userChoose){
+					this.result = true;
+					this.qualified++;
+				}
+				else{
+					this.result = false;
+				}
+			},
+			
+			// 继续游戏
+			continuePlay: function(){
+				this.time = 5;
+				this.start_flag = false;
+				this.currentSchedule = 500;
+				this.background_color = 'rgb(170, 170, 255)';
+				this.currentShape = null;
+				this.showShape = null;
+				this.result = null;
+				this.pen = uni.createCanvasContext('Canvas-startPlay');
+				this.startPlay();
+			},
+			
+			// 重新开始
+			resetPlay: function(){
+				this.time = 5;
+				this.timer = null;
+				this.start_flag = false;
+				this.currentSchedule = 500;
+				this.background_color = 'rgb(170, 170, 255)';
+				this.currentShape = null;
+				this.showShape = null;
+				this.result = null;
+				this.pen = uni.createCanvasContext('Canvas-startPlay');
+				this.qualified = 0;
 			},
 			
 			// 圆形
@@ -112,7 +225,7 @@
 				this.pen.setFillStyle(color);
 				this.pen.fill();
 				this.pen.stroke();
-				this.pen.draw();
+				this.pen.draw()
 			},
 			
 			// 长方形
@@ -242,9 +355,35 @@
 		width: 350rpx;
 		height: 350rpx;
 	}
+	.time-schedule{
+		position: relative;
+		top: 500rpx;
+		.sum-schedule{
+			width: 500rpx;
+			height: 20rpx;
+			background-color: white;
+			border-radius: 20rpx;
+			margin: 0rpx 50rpx;
+		}
+		.current-schedule{
+			position: relative;
+			top: -20rpx;
+			height: 20rpx;
+			background-color: #ffaa00;
+			border-radius: 20rpx;
+			margin: 0rpx 50rpx;
+		}
+	}
+	.time-num{
+		position: absolute;
+		top: 550rpx;
+		// left: -100rpx;
+		display: flex;
+		justify-content: center;
+	}
 	text{
 		position: absolute;
-		top: 45%;
+		top: 55%;
 		font-size: 40rpx;
 		font-weight: bold;
 		color: white;
@@ -274,5 +413,46 @@
 	}
 }
 
+.result{
+	position: absolute;
+	top: 30%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	view:first-of-type{
+		font-size: 70rpx;
+	}
+	view:nth-of-type(2){
+		margin-top: 30rpx;
+		font-size: 40rpx;
+	}
+	button{
+		width: 250rpx;
+		height: 100rpx;
+		font-size: 35rpx;
+		border: 3px solid white;
+		color: white;
+	}
+	.continue{
+		margin-top: 200rpx;
+		background-color: #55ffff;
+	}
+	.buttons{
+		position: absolute;
+		top: 400rpx;
+		left: -230rpx;
+		display: flex;
+		justify-content: space-between;
+		.resurrection{
+			width: 250rpx;
+			background-color: #87f70e;
+		}
+		.reset{
+			width: 220rpx;
+			background-color: #f7dd48;
+		}
+	}
+}
 
 </style>

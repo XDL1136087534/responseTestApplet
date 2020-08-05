@@ -45,9 +45,38 @@
   width: 350rpx;
   height: 350rpx;
 }
+.startPlay_box .time-schedule {
+  position: relative;
+  top: 500rpx;
+}
+.startPlay_box .time-schedule .sum-schedule {
+  width: 500rpx;
+  height: 20rpx;
+  background-color: white;
+  border-radius: 20rpx;
+  margin: 0rpx 50rpx;
+}
+.startPlay_box .time-schedule .current-schedule {
+  position: relative;
+  top: -20rpx;
+  height: 20rpx;
+  background-color: #ffaa00;
+  border-radius: 20rpx;
+  margin: 0rpx 50rpx;
+}
+.startPlay_box .time-num {
+  position: absolute;
+  top: 550rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
 .startPlay_box text {
   position: absolute;
-  top: 45%;
+  top: 55%;
   font-size: 40rpx;
   font-weight: bold;
   color: white;
@@ -83,5 +112,59 @@
 }
 .startPlay_box .buttons .no_btn {
   background-color: #ff557f;
+}
+.result {
+  position: absolute;
+  top: 30%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+}
+.result view:first-of-type {
+  font-size: 70rpx;
+}
+.result view:nth-of-type(2) {
+  margin-top: 30rpx;
+  font-size: 40rpx;
+}
+.result button {
+  width: 250rpx;
+  height: 100rpx;
+  font-size: 35rpx;
+  border: 3px solid white;
+  color: white;
+}
+.result .continue {
+  margin-top: 200rpx;
+  background-color: #55ffff;
+}
+.result .buttons {
+  position: absolute;
+  top: 400rpx;
+  left: -230rpx;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+          justify-content: space-between;
+}
+.result .buttons .resurrection {
+  width: 250rpx;
+  background-color: #87f70e;
+}
+.result .buttons .reset {
+  width: 220rpx;
+  background-color: #f7dd48;
 }
 
