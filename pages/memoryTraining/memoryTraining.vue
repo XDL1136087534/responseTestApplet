@@ -156,14 +156,7 @@
 					data.two_num = this.freeResurrection;
 					uni.setStorageSync('freeResurrection', data);
 					// 还原属性值
-					this.value = '';
-					this.inputValue = '';
-					this.start_flag = false;
-					this.isCorrect = null;
-					this.memory_flag = true;
-					this.currentSchedule = 500;
-					this.time = 5;
-					this.background_color = 'rgb(137, 217, 254)';
+					this.continuePlay();
 				}
 				else
 					uni.showToast({

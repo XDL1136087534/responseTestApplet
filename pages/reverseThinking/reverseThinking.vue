@@ -1,7 +1,7 @@
 <template>
 	<view class="background" @click="startPlay" v-bind:style="{ 'background-color': background_color}">
 		
-		<view v-if="start_flag===false" class="init">
+		<view :style="start_flag===false?'':'display:none;'" class="init">
 			<view class="icon">
 				<canvas canvas-id="Canvas-init"></canvas>
 			</view>
@@ -11,11 +11,11 @@
 				<text>单击任意位置开始</text>
 			</view>
 		</view>
-		<view v-else class="startPlay_box">
-			<block v-if="answer_flag===true">
+		<view :style="start_flag===true?'':'display:none;'" class="startPlay_box">
+			<view style="display: flex;justify-content: center;" :style="answer_flag===true?'':'display:none;'">
 				<canvas canvas-id="Canvas-startPlay"></canvas>
 				<view class="time-schedule">
-					<view class="sum-schedule" ></view>
+					<view class="sum-schedule"></view>
 					<view class="current-schedule" v-bind:style="{ width: currentSchedule + 'rpx'}"></view>
 				</view>
 				<view class="time-num">倒计时：{{time}}s</view>
@@ -24,8 +24,8 @@
 					<view @click="judgeIsCorrect(true)" class="yes_btn">√</view>
 					<view @click="judgeIsCorrect(false)" class="no_btn">×</view>
 				</view>
-			</block>
-			<block v-else>
+			</view>
+			<block v-if="answer_flag===false">
 				<block v-if="result===true">
 					<view class="result">
 						<view style="color: #007AFF">回答正确</view>
@@ -117,8 +117,9 @@
 				if(this.start_flag===false){
 					this.start_flag = true;
 					this.answer_flag = true;
+					var pen = uni.createCanvasContext('Canvas-startPlay');
 					this.Timer();   // 开始倒计时
-					this.pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight);   // 清理画布
+					pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight);   // 清理画布
 					var shapeDetailList = this.produceShape();   // 随机生成图形
 					var color = shapeDetailList[0];
 					var shape = shapeDetailList[1];
@@ -128,16 +129,16 @@
 					// 根据形状与颜色绘制图形
 					switch(shape){
 						case '正方形': 
-							this.drawSquare(englishColor);
+							this.drawSquare(pen, englishColor);
 							break;
 						case '圆形': 
-							this.drawCircle(englishColor);
+							this.drawCircle(pen, englishColor);
 							break;
 						case '长方形': 
-							this.drawRectangle(englishColor);
+							this.drawRectangle(pen, englishColor);
 							break;
 						case '多边形': 
-							this.drawRegularPolygon(englishColor);
+							this.drawRegularPolygon(pen, englishColor);
 					}
 					// 随机生成正确或错误的题目
 					if(Math.random() < 0.55){   // 理论上错误的题目 
@@ -199,8 +200,26 @@
 				this.currentShape = null;
 				this.showShape = null;
 				this.result = null;
-				this.pen = uni.createCanvasContext('Canvas-startPlay');
 				this.startPlay();
+			},
+			
+			// 复活继续
+			resurrectionPlay: function(){
+				if(this.freeResurrection > 0){
+					this.freeResurrection--;
+					var data = uni.getStorageSync('freeResurrection');
+					data.three_num = this.freeResurrection;
+					uni.setStorageSync('freeResurrection', data);
+					// 还原属性值
+					this.continuePlay();
+				}
+				else
+					uni.showToast({
+						title: '播放广告',
+						icon: 'none',
+						mask: true,
+						duration: 2000
+					});
 			},
 			
 			// 重新开始
@@ -213,72 +232,71 @@
 				this.currentShape = null;
 				this.showShape = null;
 				this.result = null;
-				this.pen = uni.createCanvasContext('Canvas-startPlay');
 				this.qualified = 0;
 			},
 			
 			// 圆形
-			drawCircle: function(color){
-				this.pen.setStrokeStyle("black");
-				this.pen.setLineWidth(2);
-				this.pen.arc(85, 90, 70, 0, 2 * Math.PI);
-				this.pen.setFillStyle(color);
-				this.pen.fill();
-				this.pen.stroke();
-				this.pen.draw()
+			drawCircle: function(pen, color){
+				pen.setStrokeStyle("black");
+				pen.setLineWidth(2);
+				pen.arc(85, 90, 70, 0, 2 * Math.PI);
+				pen.setFillStyle(color);
+				pen.fill();
+				pen.stroke();
+				pen.draw()
 			},
 			
 			// 长方形
-			drawRectangle: function(color){
-				this.pen.rect(10, 45, 155, 85);
-				this.pen.setFillStyle(color);
-				this.pen.fill();
-				this.pen.stroke();
-				this.pen.draw();
+			drawRectangle: function(pen, color){
+				pen.rect(10, 45, 155, 85);
+				pen.setFillStyle(color);
+				pen.fill();
+				pen.stroke();
+				pen.draw();
 			},
 			
 			// 正方形
-			drawSquare: function(color){
-				this.pen.rect(20, 20, 135, 135);
-				this.pen.setFillStyle(color);
-				this.pen.fill();
-				this.pen.stroke();
-				this.pen.draw();
+			drawSquare: function(pen, color){
+				pen.rect(20, 20, 135, 135);
+				pen.setFillStyle(color);
+				pen.fill();
+				pen.stroke();
+				pen.draw();
 			},
 			
 			// 三角形
-			drawTriangle: function(color){
-				this.pen.moveTo(90, 30);
-				this.pen.lineTo(10, 90);
-				this.pen.lineTo(165, 90);
-				this.pen.lineTo(90, 30);
-				this.pen.setFillStyle(color);
-				this.pen.fill();
-				this.pen.stroke();
-				this.pen.draw();
+			drawTriangle: function(pen, color){
+				pen.moveTo(90, 30);
+				pen.lineTo(10, 90);
+				pen.lineTo(165, 90);
+				pen.lineTo(90, 30);
+				pen.setFillStyle(color);
+				pen.fill();
+				pen.stroke();
+				pen.draw();
 			},
 			
 			// 正多边形
-			drawRegularPolygon: function(color){
+			drawRegularPolygon: function(pen, color){
 				var num = Math.ceil(Math.random() * 6) + 3;
-				this.createPolygonPath(this.canvasWidth/4,this.canvasHeight/4,this.canvasWidth/6,num,0);
-				this.pen.setFillStyle(color);
-				this.pen.fill();
-				this.pen.stroke();
-				this.pen.draw();
+				this.createPolygonPath(this.canvasWidth/4,this.canvasHeight/4,this.canvasWidth/6,num,0, pen);
+				pen.setFillStyle(color);
+				pen.fill();
+				pen.stroke();
+				pen.draw();
 			},
 			
 			// 连接正多边形的点
-			createPolygonPath: function(centerX,centerY,radius,sides,startAngle) {
+			createPolygonPath: function(centerX, centerY, radius, sides, startAngle, pen) {
 			    let points = this.getPolygonPoints(centerX,centerY,radius,sides,startAngle);
 			
-			    this.pen.beginPath();
-			    this.pen.moveTo(points[0].x,points[0].y);
+			    pen.beginPath();
+			    pen.moveTo(points[0].x,points[0].y);
 			
 			    for (let i=0;i<sides;++i){
-			        this.pen.lineTo(points[i].x,points[i].y);
+			        pen.lineTo(points[i].x,points[i].y);
 			    }
-			    this.pen.closePath();
+			    pen.closePath();
 			},
 			
 			// 得到正多边形的点
@@ -348,6 +366,7 @@
 .startPlay_box{
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	canvas{
 		position: absolute;
 		top: 10%;
@@ -377,9 +396,6 @@
 	.time-num{
 		position: absolute;
 		top: 550rpx;
-		// left: -100rpx;
-		display: flex;
-		justify-content: center;
 	}
 	text{
 		position: absolute;

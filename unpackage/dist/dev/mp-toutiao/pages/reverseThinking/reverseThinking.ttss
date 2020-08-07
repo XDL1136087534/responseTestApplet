@@ -37,6 +37,9 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
 }
 .startPlay_box canvas {
   position: absolute;
@@ -67,12 +70,6 @@
 .startPlay_box .time-num {
   position: absolute;
   top: 550rpx;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-          justify-content: center;
 }
 .startPlay_box text {
   position: absolute;
