@@ -19,7 +19,7 @@
 					<view class="current-schedule" v-bind:style="{ width: currentSchedule + 'rpx'}"></view>
 				</view>
 				<view class="time-num">倒计时：{{time}}s</view>
-				<text>{{showShape}}</text>
+				<text :style="{ 'color': showShapeFontColor }">{{showShape}}</text>
 				<view class="buttons">
 					<view @click="judgeIsCorrect(true)" class="yes_btn">√</view>
 					<view @click="judgeIsCorrect(false)" class="no_btn">×</view>
@@ -58,15 +58,18 @@
 				background_color: 'rgb(170, 170, 255)',
 				canvasWidth: 350,
 				canvasHeight: 350,
-				time: 5,  // 答题时间
+				time: 4,  // 答题时间
+				timeSpace: 12.5,  // 进度条步长
 				timer: null, // 计时器
 				currentSchedule: 500,   // 进度条长度
 				shapeList: ['Square', 'Circle', 'Rectangle', 'RegularPolygon'],
 				colorList: ['white', 'red', 'blue', 'green', 'purple', 'yellow'],
-				chineseShapeList: ['正方形', '圆形', '长方形', '多边形'],
+				chineseShapeList: ['正方形', '圆形', '长方形', '边形'],
 				chineseColorList: ['白色', '红色', '蓝色', '绿色', '紫色', '黄色'],
+				chineseNum: ['五', '六', '七', '八', '九'],
 				currentShape: null,  // 真实的图形
 				showShape: null,     // 用户看到的题目
+				showShapeFontColor: 'white',   // 题目的字体颜色，迷惑用户
 				pen: uni.createCanvasContext('Canvas-startPlay'),    // 画笔
 				result: null,   // 用户结果正确与否
 				freeResurrection: null,
@@ -117,7 +120,9 @@
 				if(this.start_flag===false){
 					this.start_flag = true;
 					this.answer_flag = true;
+					this.time = 4;
 					var pen = uni.createCanvasContext('Canvas-startPlay');
+					this.upDifficulty();   // 提升难度
 					this.Timer();   // 开始倒计时
 					pen.clearRect(0, 0, this.canvasWidth, this.canvasHeight);   // 清理画布
 					var shapeDetailList = this.produceShape();   // 随机生成图形
@@ -125,9 +130,14 @@
 					var shape = shapeDetailList[1];
 					var englishColor = shapeDetailList[2];
 					var englishShape = shapeDetailList[3];
-					this.currentShape = color + '的' + shape;   // 当前正确的图形
+					// this.currentShape = color + '的' + shape;   // 当前正确的图形
 					// 根据形状与颜色绘制图形
+					var num = null;
 					switch(shape){
+						case '边形':
+							num = this.chineseNum[this.drawRegularPolygon(pen, englishColor) - 5];
+							this.currentShape = color + '的' + num + shape;   // 当前正确的图形
+							break;
 						case '正方形': 
 							this.drawSquare(pen, englishColor);
 							break;
@@ -136,18 +146,35 @@
 							break;
 						case '长方形': 
 							this.drawRectangle(pen, englishColor);
-							break;
-						case '多边形': 
-							this.drawRegularPolygon(pen, englishColor);
 					}
+					if(shape != '边形')
+						this.currentShape = color + '的' + shape;   // 当前正确的图形
 					// 随机生成正确或错误的题目
-					if(Math.random() < 0.55){   // 理论上错误的题目 
-						shapeDetailList = this.produceShape();
-						this.showShape = shapeDetailList[0] + '的' + shapeDetailList[1];
+					if(Math.random() < 0.55){   // 理论上错误的题目,有可能随机到正确的题目
+						if(shape === '边形'){
+							if(Math.random() < 0.3)   // 颜色比形状好区分，因此变化形状，迷惑用户
+								this.showShape = this.chineseColorList[Math.floor(Math.random() * this.chineseColorList.length)] + '的' + num + shape;
+							else{
+								num = this.chineseNum[Math.floor(Math.random() * this.chineseNum.length)]
+								this.showShape = color + '的' + num + shape;
+							}
+						}
+						else{
+							shapeDetailList = this.produceShape();
+							if(shapeDetailList[1] === '边形'){
+								num = this.chineseNum[Math.floor(Math.random() * this.chineseNum.length)];
+								this.showShape = shapeDetailList[0] + '的' + num + shapeDetailList[1];
+							}
+							else
+								this.showShape = shapeDetailList[0] + '的' + shapeDetailList[1];
+						}
 					}
 					else{   // 正确的题目
 						this.showShape = this.currentShape;
 					}
+					// 随机生成题目的颜色
+					if(this.qualified >= 10)
+						this.showShapeFontColor = this.colorList[Math.floor(Math.random() * this.colorList.length)];
 				}
 			},
 			
@@ -156,14 +183,38 @@
 				this.timer = setInterval(()=>{
 					var time = this.time * 1000 - 100;
 					this.time = (time / 1000).toFixed(1);
-					this.currentSchedule = this.currentSchedule - 10;
-					if(this.currentSchedule === 0){   // 超时
+					this.currentSchedule = this.currentSchedule - this.timeSpace;
+					if(this.currentSchedule <= 0){   // 超时
 						clearInterval(this.timer);
 						this.answer_flag = false;
 						this.result = false;
 						this.background_color = 'rgb(243, 223, 187)';
 					}
 				}, 100);
+			},
+			
+			// 升级难度
+			upDifficulty: function(){
+				if(this.qualified >= 4 && this.qualified < 8){   // 升级难度
+					this.time = 3.5;
+					this.timeSpace = 14.2;
+				}
+				else if(this.qualified >= 8 && this.qualified < 12){
+					this.time = 3;
+					this.timeSpace = 16.5;
+				}
+				else if(this.qualified >= 12 && this.qualified < 16){
+					this.time = 2.5;
+					this.timeSpace = 20;
+				}
+				else if(this.qualified >= 16 && this.qualified < 20){
+					this.time = 2;
+					this.timeSpace = 25;
+				}
+				else if(this.qualified >= 20){
+					this.time = 1.5;
+					this.timeSpace = 33.4;
+				}
 			},
 			
 			// 随机生成图形
@@ -193,7 +244,6 @@
 			
 			// 继续游戏
 			continuePlay: function(){
-				this.time = 5;
 				this.start_flag = false;
 				this.currentSchedule = 500;
 				this.background_color = 'rgb(170, 170, 255)';
@@ -224,13 +274,15 @@
 			
 			// 重新开始
 			resetPlay: function(){
-				this.time = 5;
+				this.time = 4;
+				this.timeSpace = 12.5;
 				this.timer = null;
 				this.start_flag = false;
 				this.currentSchedule = 500;
 				this.background_color = 'rgb(170, 170, 255)';
 				this.currentShape = null;
 				this.showShape = null;
+				this.showShapeFontColor = 'white';
 				this.result = null;
 				this.qualified = 0;
 			},
@@ -278,12 +330,13 @@
 			
 			// 正多边形
 			drawRegularPolygon: function(pen, color){
-				var num = Math.ceil(Math.random() * 6) + 3;
+				var num = Math.ceil(Math.random() * this.chineseShapeList.length) + 4;
 				this.createPolygonPath(this.canvasWidth/4,this.canvasHeight/4,this.canvasWidth/6,num,0, pen);
 				pen.setFillStyle(color);
 				pen.fill();
 				pen.stroke();
 				pen.draw();
+				return num;
 			},
 			
 			// 连接正多边形的点
@@ -376,7 +429,7 @@
 	}
 	.time-schedule{
 		position: relative;
-		top: 500rpx;
+		top: 550rpx;
 		.sum-schedule{
 			width: 500rpx;
 			height: 20rpx;
@@ -395,12 +448,12 @@
 	}
 	.time-num{
 		position: absolute;
-		top: 550rpx;
+		top: 600rpx;
 	}
 	text{
 		position: absolute;
-		top: 55%;
-		font-size: 40rpx;
+		top: 60%;
+		font-size: 60rpx;
 		font-weight: bold;
 		color: white;
 	}
@@ -408,7 +461,7 @@
 		display: flex;
 		justify-content: space-around;
 		position: absolute;
-		top: 65%;
+		top: 75%;
 		width: 750rpx;
 		view{
 			width: 100rpx;

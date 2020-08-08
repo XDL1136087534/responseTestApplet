@@ -82,7 +82,7 @@
 				this.currentDifferenceIndex = Math.floor(Math.random() * this.colorList.length);
 				this.colorList[this.currentDifferenceIndex] = twoColor;
 				// 改变难度
-				this.colorDifference = this.colorDifference >= 6 ? this.colorDifference - 3 : 3;  // 最低为3
+				this.colorDifference = this.colorDifference >= 6 ? this.colorDifference - 3 : 6;  // 最低为3
 			},
 			
 			// 小方块的点击事件  判断是否正确

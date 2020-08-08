@@ -62,8 +62,8 @@
 				strList: '0123456789',  // 题目的范围
 				value: '',   // 当前的题目
 				inputValue: '',  // 用户输入的值
-				time: 5  ,// 倒计时
-				timeSpace: 10,  // 进度条缩小像素
+				time: 3  ,// 倒计时
+				timeSpace: 16.6,  // 进度条缩小像素
 				isCorrect: null,   // 回答是否正确, 为空表示不暂时不显示
 				duplicateFlag: 0,   // 每一个长度重复3次 
 				stringLength: 4,   // 题目的长度
@@ -85,14 +85,14 @@
 					if(this.qualified >= 6 && this.qualified < 9){
 						// this.currentSchedule = this.currentSchedule + 100 * 2;
 						this.time  = this.time + 2   // 延长记忆时间
-						this.timeSpace = 7;
+						this.timeSpace = 10;
 						this.strList = this.strList.concat('abcdefghijklmnopqrstuvwxyz');
 						console.log(this.strList);
 					}
 					else if(this.qualified >= 9){
 						// this.currentSchedule = this.currentSchedule + 100 * 3;
-						this.time  = this.time + 5;   // 延长记忆时间
-						this.timeSpace = 5;
+						this.time  = this.time + 4;   // 延长记忆时间
+						this.timeSpace = 7.14;
 						this.strList = this.strList.concat('ABCDEFGHIJKLMNOPQRSTUVWXYZ');
 						console.log(this.strList);
 					}
@@ -144,7 +144,7 @@
 				this.isCorrect = null;
 				this.memory_flag = true;
 				this.currentSchedule = 500;
-				this.time = 5;
+				this.time = 3;
 				this.background_color = 'rgb(137, 217, 254)';
 			},
 			
@@ -179,8 +179,8 @@
 				this.qualified = 0;
 				this.stringLength = 4;
 				this.duplicateFlag = 0;
-				this.time = 5;
-				this.timeSpace = 10;
+				this.time = 3;
+				this.timeSpace = 16.5;
 				this.strList = '0123456789';
 				this.background_color = 'rgb(137, 217, 254)';
 			},

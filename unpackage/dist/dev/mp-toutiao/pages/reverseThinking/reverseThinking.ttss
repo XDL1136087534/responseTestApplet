@@ -50,7 +50,7 @@
 }
 .startPlay_box .time-schedule {
   position: relative;
-  top: 500rpx;
+  top: 550rpx;
 }
 .startPlay_box .time-schedule .sum-schedule {
   width: 500rpx;
@@ -69,12 +69,12 @@
 }
 .startPlay_box .time-num {
   position: absolute;
-  top: 550rpx;
+  top: 600rpx;
 }
 .startPlay_box text {
   position: absolute;
-  top: 55%;
-  font-size: 40rpx;
+  top: 60%;
+  font-size: 60rpx;
   font-weight: bold;
   color: white;
 }
@@ -85,7 +85,7 @@
   -webkit-justify-content: space-around;
           justify-content: space-around;
   position: absolute;
-  top: 65%;
+  top: 75%;
   width: 750rpx;
 }
 .startPlay_box .buttons view {
