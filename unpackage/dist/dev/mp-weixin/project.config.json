@@ -27,7 +27,7 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": false,
+		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"packNpmManually": false,
 		"packNpmRelationList": []
@@ -35,7 +35,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "",
 	"appid": "wxb33c873de409ce58",
-	"projectname": "%E5%B0%8F%E6%B8%B8%E6%88%8F",
+	"projectname": "小游戏",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"condition": {

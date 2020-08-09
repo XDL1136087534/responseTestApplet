@@ -80,6 +80,15 @@
 				uni.setStorageSync('yesterdayDate', currentDate);   // 把当前日作为明天的昨天
 			}
 		},
+		// onShareAppMessage(res){
+		// 	if (res.from === 'button') {// 来自页面内分享按钮
+		// 	      console.log(res.target)
+		// 	    }
+		// 	return {
+		// 	    title: '应急反应训练',
+		// 	    path: '/pages/index/index',
+		// 	}
+		// },
 		methods: {
 
 		}

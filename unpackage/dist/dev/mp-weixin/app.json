@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/reverseThinking/reverseThinking",
     "pages/index/index",
+    "pages/reverseThinking/reverseThinking",
     "pages/redEnvelope/redEnvelope",
     "pages/memoryTraining/memoryTraining",
     "pages/distinguishColor/distinguishColor"
@@ -14,5 +14,5 @@
     "backgroundColor": "#eeeeee"
   },
   "usingComponents": {},
-  "sitemapLocation": "sitemap60.json"
+  "sitemapLocation": "sitemap94.json"
 }

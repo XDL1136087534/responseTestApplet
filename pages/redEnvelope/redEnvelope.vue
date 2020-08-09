@@ -65,6 +65,12 @@
 			var data = uni.getStorageSync('freeResurrection');
 			this.freeResurrection = data.one_num;
 		},
+		// onShareAppMessage(){
+		// 	return{
+		// 		title: '抢红包',
+		// 		path: '/pages/redEnvelope/redEnvelope',
+		// 	}
+		// },
 		methods:{
 			start: function(){
 				this.awit_flag = true;
