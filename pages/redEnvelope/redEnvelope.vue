@@ -33,7 +33,11 @@
 					 <view style="color:rgb(251, 227, 43);font-size: 20px;">测试不合格</view>
 					 <view style="margin-top: 20rpx;font-size: 35rpx;">当前合格时间:{{qualifiedTime}}ms</view>
 					 <view style="font-size: 20px;">您成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
-					 <button class="resurrection" @click="resurrectionPlay" type="default">复活挑战({{freeResurrection}})</button>
+					 <button class="resurrection" @click="resurrectionPlay" type="default">
+						 复活挑战
+						 <block v-if="freeResurrection > 0">({{freeResurrection}})</block>
+						 <block v-else><image style="margin: 20rpx 10rpx;width: 40rpx;height: 40rpx;" src="../../static/video.png"></image></block>
+					</button>
 					 <button class="reset" @click="reset" type="default">重新挑战</button>
 				 </view>
 			 </view>
@@ -57,20 +61,47 @@
 				endTime: 0,     // 红包被点击的时间
 				speed: 0,    // 测试的速度
 				freeResurrection: 0,   // 免费复活次数
-				qualified: 0   // 坚持的次数
+				qualified: 0, // 坚持的次数
+				videoAd: null   // 广告
 			};
 		},
 		onLoad() {
 			// 获取免费复活次数
 			var data = uni.getStorageSync('freeResurrection');
 			this.freeResurrection = data.one_num;
+			
+			// 字节跳动   接入广告
+			//#ifdef MP-TOUTIAO	   
+				tt.getSystemInfo({
+				  success:(res)=>{
+				    if(res.appName == 'Douyin'){  // 抖音小程序
+						this.videoAd = tt.createRewardedVideoAd({ adUnitId: 'm4b0cj6iplh26cqvst' });
+						// 监听用户是否观看完视频
+						this.videoAd.onClose((res) => {
+							if(res.isEnded) {
+								this.continuePlay();   // 继续游戏
+							}
+						});
+					}
+				  },
+				});
+			//#endif
+			
+			 // 微信小程序  接入广告
+			//#ifdef MP-WEIXIN   
+				      this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' })
+				      this.videoAd .onLoad(() => {
+				        console.log('onLoad event emit')
+				      })
+				      this.videoAd .onError((err) => {
+				        console.log('onError event emit', err)
+				      })
+				      this.videoAd .onClose((res) => {
+				        console.log('onClose event emit', res)
+				      })
+					  console.log('videoAd: ' + this.videoAd);
+			//#endif
 		},
-		// onShareAppMessage(){
-		// 	return{
-		// 		title: '抢红包',
-		// 		path: '/pages/redEnvelope/redEnvelope',
-		// 	}
-		// },
 		methods:{
 			start: function(){
 				this.awit_flag = true;
@@ -113,13 +144,51 @@
 					uni.setStorageSync('freeResurrection', data);
 					this.start();
 				}
-				else
-					uni.showToast({
-						title: '播放广告',
-						icon: 'none',
-						mask: true,
-						duration: 2000
-					});
+				else{
+					//#ifndef MP-TOUTIAO
+						uni.showToast({
+							title: '其他播放广告',
+							icon: 'none',
+							mask: true,
+							duration: 2000
+						});
+					//#endif
+					
+					// 字节跳动小程序广告
+					//#ifdef MP-TOUTIAO
+						if(this.videoAd != null){   // 用户设备支持广告
+							uni.showModal({
+								title: '提示',
+								content: '需观看完整视频，才能复活哦',
+								success: (res)=>{
+									if (res.confirm) {
+										this.TOUTIAO_ad();
+									} else if (res.cancel) {
+										console.log('用户点击取消');
+									}
+								}
+							});
+						}
+						else{
+							uni.showModal({
+								title: '暂不支持广告',
+								duration: 2000,
+								icon: 'none'
+							})
+						}
+					//#endif
+					
+					//#ifdef MP-WEIXIN
+						this.videoAd.show()
+						.catch(() => {
+						    this.videoAd.load()
+						    .then(() => this.videoAd.show())
+						    .catch(err => {
+						      console.log('激励视频 广告显示失败')
+						    })
+						})
+					//#endif
+				}
 			},
 			
 			// 重新开始游戏
@@ -127,7 +196,33 @@
 				this.qualified = 0;
 				this.qualifiedTime = 800;
 				this.start();
-			}
+			},
+			
+			// 字节跳动广告
+			TOUTIAO_ad: function(){
+				// 显示广告
+				this.videoAd
+					.show()
+					.then(() => {
+					    console.log("广告显示成功");
+					})
+					.catch((err) => {
+					    console.log("广告组件出现问题", err);
+						uni.showToast({
+							title: '广告组件出现问题',
+							icon: 'none',
+							mask: true,
+							duration: 2000
+						});
+					    // 可以手动加载一次
+					    this.videoAd.load().then(() => {
+					      console.log("手动加载成功");
+					      // 加载成功后需要再显示广告
+					      return this.videoAd.show();
+					    });
+					});
+			},
+			
 		}
 	}
 </script>

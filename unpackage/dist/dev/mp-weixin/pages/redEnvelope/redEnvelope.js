@@ -189,20 +189,38 @@ var _default =
       endTime: 0, // 红包被点击的时间
       speed: 0, // 测试的速度
       freeResurrection: 0, // 免费复活次数
-      qualified: 0 // 坚持的次数
+      qualified: 0, // 坚持的次数
+      videoAd: null // 广告
     };
   },
   onLoad: function onLoad() {
     // 获取免费复活次数
     var data = uni.getStorageSync('freeResurrection');
     this.freeResurrection = data.one_num;
+
+
+
+
+
+
+
+
+
+
+
+    this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' });
+    this.videoAd.onLoad(function () {
+      console.log('onLoad event emit');
+    });
+    this.videoAd.onError(function (err) {
+      console.log('onError event emit', err);
+    });
+    this.videoAd.onClose(function (res) {
+      console.log('onClose event emit', res);
+    });
+    console.log('videoAd: ' + this.videoAd);
+
   },
-  // onShareAppMessage(){
-  // 	return{
-  // 		title: '抢红包',
-  // 		path: '/pages/redEnvelope/redEnvelope',
-  // 	}
-  // },
   methods: {
     start: function start() {var _this = this;
       this.awit_flag = true;
@@ -237,7 +255,7 @@ var _default =
     },
 
     // 复活继续
-    resurrectionPlay: function resurrectionPlay() {
+    resurrectionPlay: function resurrectionPlay() {var _this2 = this;
       if (this.freeResurrection > 0) {
         this.freeResurrection--;
         var data = uni.getStorageSync('freeResurrection');
@@ -245,13 +263,46 @@ var _default =
         uni.setStorageSync('freeResurrection', data);
         this.start();
       } else
+      {
 
-      uni.showToast({
-        title: '播放广告',
-        icon: 'none',
-        mask: true,
-        duration: 2000 });
+        uni.showToast({
+          title: '其他播放广告',
+          icon: 'none',
+          mask: true,
+          duration: 2000 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        this.videoAd.show().
+        catch(function () {
+          _this2.videoAd.load().
+          then(function () {return _this2.videoAd.show();}).
+          catch(function (err) {
+            console.log('激励视频 广告显示失败');
+          });
+        });
+
+      }
     },
 
     // 重新开始游戏

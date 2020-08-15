@@ -1,11 +1,7 @@
 {
   "setting": {
-    "urlCheck": true,
-    "es6": false,
-    "postcss": false,
-    "minified": false,
-    "newFeature": true
+    "es6": false
   },
-  "appid": "tt6ac01c7df5fa1905",
+  "appid": "tt541822a5cb22285d",
   "projectname": "小游戏"
 }

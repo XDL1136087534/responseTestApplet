@@ -41,7 +41,11 @@
 						<view>正确答案:<text style="font-size: 40rpx;color: #007AFF">{{value}}</text></view>
 						<view>您的答案:<text style="font-size: 40rpx;color: #ff9e02">{{inputValue}}</text></view>
 						<view>您成功坚持<text style="font-size: 45rpx;color: #ff0289">{{qualified}}</text>轮</view>
-						<button @click="resurrectionPlay" class="resurrection" type="default">复活继续({{freeResurrection}})</button>
+						<button @click="resurrectionPlay" class="resurrection" type="default">
+							复活挑战
+							<block v-if="freeResurrection > 0">({{freeResurrection}})</block>
+							<block v-else><image style="width: 40rpx;height: 40rpx;" src="../../static/video.png"></image></block>
+						</button>
 						<button @click="resetPlay" class="reset" type="default">重新开始</button>
 					</block>
 				</view>
@@ -75,6 +79,38 @@
 			// 获取免费复活次数
 			var data = uni.getStorageSync('freeResurrection');
 			this.freeResurrection = data.two_num;
+			
+			// 字节跳动   接入广告
+			//#ifdef MP-TOUTIAO	   
+				tt.getSystemInfo({
+				  success:(res)=>{
+				    if(res.appName == 'Douyin'){  // 抖音小程序
+						this.videoAd = tt.createRewardedVideoAd({ adUnitId: 'm4b0cj6iplh26cqvst' });
+						// 监听用户是否观看完视频
+						this.videoAd.onClose((res) => {
+							if(res.isEnded) {
+								this.continuePlay();   // 继续游戏
+							}
+						});
+					}
+				  },
+				});
+			//#endif
+			
+			 // 微信小程序  接入广告
+			//#ifdef MP-WEIXIN   
+				      this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' })
+				      this.videoAd .onLoad(() => {
+				        console.log('onLoad event emit')
+				      })
+				      this.videoAd .onError((err) => {
+				        console.log('onError event emit', err)
+				      })
+				      this.videoAd .onClose((res) => {
+				        console.log('onClose event emit', res)
+				      })
+					  console.log('videoAd: ' + this.videoAd);
+			//#endif
 		},
 		methods:{
 			// 开始游戏
@@ -146,6 +182,7 @@
 				this.currentSchedule = 500;
 				this.time = 3;
 				this.background_color = 'rgb(137, 217, 254)';
+				this.startPlay();
 			},
 			
 			// 复活继续
@@ -159,12 +196,49 @@
 					this.continuePlay();
 				}
 				else
-					uni.showToast({
-						title: '播放广告',
-						icon: 'none',
-						mask: true,
-						duration: 2000
-					});
+					//#ifndef MP-TOUTIAO
+						uni.showToast({
+							title: '其他播放广告',
+							icon: 'none',
+							mask: true,
+							duration: 2000
+						});
+					//#endif
+					
+					// 字节跳动小程序广告
+					//#ifdef MP-TOUTIAO
+						if(this.videoAd != null){   // 用户设备支持广告
+							uni.showModal({
+								title: '提示',
+								content: '需观看完整视频，才能复活哦',
+								success: (res)=>{
+									if (res.confirm) {
+										this.TOUTIAO_ad();
+									} else if (res.cancel) {
+										console.log('用户点击取消');
+									}
+								}
+							});
+						}
+						else{
+							uni.showModal({
+								title: '暂不支持广告',
+								duration: 2000,
+								icon: 'none'
+							})
+						}
+					//#endif
+					
+					//#ifdef MP-WEIXIN
+						this.videoAd.show()
+						.catch(() => {
+						    this.videoAd.load()
+						    .then(() => this.videoAd.show())
+						    .catch(err => {
+						      console.log('激励视频 广告显示失败')
+						    })
+						})
+					//#endif
 			},
 			
 			// 重新开始
@@ -192,6 +266,31 @@
 					str = str + strList[Math.floor(Math.random()*strList.length)];
 				}
 				return str;
+			},
+			
+			// 字节跳动广告
+			TOUTIAO_ad: function(){
+				// 显示广告
+				this.videoAd
+					.show()
+					.then(() => {
+					    console.log("广告显示成功");
+					})
+					.catch((err) => {
+					    console.log("广告组件出现问题", err);
+						uni.showToast({
+							title: '广告组件出现问题',
+							icon: 'none',
+							mask: true,
+							duration: 2000
+						});
+					    // 可以手动加载一次
+					    this.videoAd.load().then(() => {
+					      console.log("手动加载成功");
+					      // 加载成功后需要再显示广告
+					      return this.videoAd.show();
+					    });
+					});
 			},
 		}
 	}

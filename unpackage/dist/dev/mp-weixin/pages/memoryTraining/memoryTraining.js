@@ -97,7 +97,8 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  var g0 = Math.ceil(_vm.time)
+  var g0 =
+    !(_vm.start_flag === false) && _vm.memory_flag ? Math.ceil(_vm.time) : null
   _vm.$mp.data = Object.assign(
     {},
     {

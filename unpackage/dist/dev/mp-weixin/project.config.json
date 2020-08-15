@@ -27,14 +27,14 @@
 			"outputPath": ""
 		},
 		"useIsolateContext": true,
-		"useCompilerModule": true,
+		"useCompilerModule": false,
 		"userConfirmedUseCompilerModuleSwitch": false,
 		"packNpmManually": false,
 		"packNpmRelationList": []
 	},
 	"compileType": "miniprogram",
 	"libVersion": "",
-	"appid": "wxb33c873de409ce58",
+	"appid": "touristappid",
 	"projectname": "小游戏",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
