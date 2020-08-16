@@ -11,6 +11,18 @@
 				<view>你能做到吗?</view>
 				<text>单击任意位置开始</text>
 			</view>
+			<!-- 字节跳动banner -->
+			<!--  #ifdef  MP-TOUTIAO -->
+			<ad
+			    unit-id="165r39oskhv2bl8hcb"
+			    bindload="adloadhandler"
+			    binderror="aderrorhandler"
+			    bindclose="adclosehandler"
+				type="lImg rImg"
+				scale="100 100"
+				style="position: fixed;top: 1000rpx;left: 0rpx;"
+			  ></ad>
+			<!--  #endif -->
 		</view>
 		<view v-else class="start">
 			<!-- 记忆阶段 -->
@@ -268,7 +280,7 @@
 				return str;
 			},
 			
-			// 字节跳动广告
+			// 字节跳动视频广告
 			TOUTIAO_ad: function(){
 				// 显示广告
 				this.videoAd
@@ -292,6 +304,25 @@
 					    });
 					});
 			},
+			
+			// 字节跳动banner广告
+			// #ifdef MP-TOUTIAO
+			adloadhandler: function(e){
+			    console.log("广告加载成功");
+			},
+			  
+			aderrorhandler: function(e){
+			    console.log("广告加载失败", e);
+				tt.showToast({
+			      title: "广告加载失败" + e.errMsg,
+			      icon: "fail",
+			    });
+			},
+			
+			adclosehandler: function(e){
+			   console.log("广告关闭");
+			},
+			// #endif
 		}
 	}
 </script>
@@ -340,7 +371,7 @@
 		}
 		text{
 			position: absolute;
-			top: 95%;
+			top: 75%;
 			left: 23%;
 		}
 	}

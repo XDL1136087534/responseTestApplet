@@ -10,6 +10,18 @@
 				<view>成为极少数的成功者</view>
 				<text>单击任意位置开始</text>
 			</view>
+			<!-- 字节跳动banner -->
+			<!--  #ifdef  MP-TOUTIAO -->
+			<ad
+			    unit-id="165r39oskhv2bl8hcb"
+			    bindload="adloadhandler"
+			    binderror="aderrorhandler"
+			    bindclose="adclosehandler"
+				type="lImg rImg"
+				scale="100 100"
+				style="position: fixed;top: 1000rpx;left: 0rpx;"
+			  ></ad>
+			<!--  #endif -->
 		</view>
 		<view :style="start_flag===true?'':'display:none;'" class="startPlay_box">
 			<view style="display: flex;justify-content: center;" :style="answer_flag===true?'':'display:none;'">
@@ -21,8 +33,8 @@
 				<view class="time-num">倒计时：{{time}}s</view>
 				<text :style="{ 'color': showShapeFontColor }">{{showShape}}</text>
 				<view class="buttons">
-					<view @click="judgeIsCorrect(true)" class="yes_btn">√</view>
-					<view @click="judgeIsCorrect(false)" class="no_btn">×</view>
+					<view @click="judgeIsCorrect(true)" class="yes_btn">✔</view>
+					<view @click="judgeIsCorrect(false)" class="no_btn">✘</view>
 				</view>
 			</view>
 			<block v-if="answer_flag===false">
@@ -360,31 +372,6 @@
 				this.qualified = 0;
 			},
 			
-			// 字节跳动广告
-			TOUTIAO_ad: function(){
-				// 显示广告
-				this.videoAd
-					.show()
-					.then(() => {
-					    console.log("广告显示成功");
-					})
-					.catch((err) => {
-					    console.log("广告组件出现问题", err);
-						uni.showToast({
-							title: '广告组件出现问题',
-							icon: 'none',
-							mask: true,
-							duration: 2000
-						});
-					    // 可以手动加载一次
-					    this.videoAd.load().then(() => {
-					      console.log("手动加载成功");
-					      // 加载成功后需要再显示广告
-					      return this.videoAd.show();
-					    });
-					});
-			},
-			
 			// 圆形
 			drawCircle: function(pen, color){
 				pen.setStrokeStyle("black");
@@ -468,7 +455,51 @@
 			    }
 			
 			    return points;
-			}
+			},
+			
+			// 字节跳动视频广告
+			TOUTIAO_ad: function(){
+				// 显示广告
+				this.videoAd
+					.show()
+					.then(() => {
+					    console.log("广告显示成功");
+					})
+					.catch((err) => {
+					    console.log("广告组件出现问题", err);
+						uni.showToast({
+							title: '广告组件出现问题',
+							icon: 'none',
+							mask: true,
+							duration: 2000
+						});
+					    // 可以手动加载一次
+					    this.videoAd.load().then(() => {
+					      console.log("手动加载成功");
+					      // 加载成功后需要再显示广告
+					      return this.videoAd.show();
+					    });
+					});
+			},
+			
+			// 字节跳动banner广告
+			// #ifdef MP-TOUTIAO
+			adloadhandler: function(e){
+			    console.log("广告加载成功");
+			},
+			  
+			aderrorhandler: function(e){
+			    console.log("广告加载失败", e);
+				tt.showToast({
+			      title: "广告加载失败" + e.errMsg,
+			      icon: "fail",
+			    });
+			},
+			
+			adclosehandler: function(e){
+			   console.log("广告关闭");
+			},
+			// #endif
 		}
 	}
 </script>
@@ -508,7 +539,7 @@
 		}
 		text{
 			position: absolute;
-			top: 95%;
+			top: 75%;
 			left: 23%;
 		}
 	}
@@ -564,7 +595,7 @@
 		view{
 			width: 100rpx;
 			height: 100rpx;
-			font-size: 60rpx;
+			font-size: 50rpx;
 			border-radius: 50%;
 			display: flex;
 			justify-content: center;

@@ -9,6 +9,18 @@
 			<image @click="start" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-xiaoyouxi/91b9e040-cb0e-11ea-8a36-ebb87efcf8c0.png"></image>
 			<view @click="start">点击开始</view>
 			<view >当红包出现,开始点击红包测试</view>
+			<!-- 字节跳动banner -->
+			<!--  #ifdef  MP-TOUTIAO -->
+			<ad
+			    unit-id="165r39oskhv2bl8hcb"
+			    bindload="adloadhandler"
+			    binderror="aderrorhandler"
+			    bindclose="adclosehandler"
+				type="lImg rImg"
+				scale="100 100"
+				style="position: fixed;top: 1000rpx;left: 0rpx;"
+			  ></ad>
+			<!--  #endif -->
 		</view>
 		<!-- 游戏开始 -->
 		<view v-else class="start">
@@ -72,34 +84,34 @@
 			
 			// 字节跳动   接入广告
 			//#ifdef MP-TOUTIAO	   
-				tt.getSystemInfo({
-				  success:(res)=>{
-				    if(res.appName == 'Douyin'){  // 抖音小程序
-						this.videoAd = tt.createRewardedVideoAd({ adUnitId: 'm4b0cj6iplh26cqvst' });
-						// 监听用户是否观看完视频
-						this.videoAd.onClose((res) => {
-							if(res.isEnded) {
-								this.continuePlay();   // 继续游戏
-							}
-						});
-					}
-				  },
-				});
+			tt.getSystemInfo({
+				 success:(res)=>{
+				   if(res.appName == 'Douyin'){  // 抖音小程序
+					this.videoAd = tt.createRewardedVideoAd({ adUnitId: 'm4b0cj6iplh26cqvst' });
+					// 监听用户是否观看完视频
+					this.videoAd.onClose((res) => {
+						if(res.isEnded) {
+							this.continuePlay();   // 继续游戏
+						}
+					});
+				}
+				 },
+			});
 			//#endif
 			
 			 // 微信小程序  接入广告
 			//#ifdef MP-WEIXIN   
-				      this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' })
-				      this.videoAd .onLoad(() => {
-				        console.log('onLoad event emit')
-				      })
-				      this.videoAd .onError((err) => {
-				        console.log('onError event emit', err)
-				      })
-				      this.videoAd .onClose((res) => {
-				        console.log('onClose event emit', res)
-				      })
-					  console.log('videoAd: ' + this.videoAd);
+			this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' })
+			this.videoAd .onLoad(() => {
+				 console.log('onLoad event emit')
+			})
+			this.videoAd .onError((err) => {
+				 console.log('onError event emit', err)
+			})
+			this.videoAd .onClose((res) => {
+				 console.log('onClose event emit', res)
+			})
+			console.log('videoAd: ' + this.videoAd);
 			//#endif
 		},
 		methods:{
@@ -222,6 +234,25 @@
 					    });
 					});
 			},
+			
+			// 字节跳动banner广告
+			// #ifdef MP-TOUTIAO
+			adloadhandler: function(e){
+			    console.log("广告加载成功");
+			},
+			  
+			aderrorhandler: function(e){
+			    console.log("广告加载失败", e);
+				tt.showToast({
+			      title: "广告加载失败" + e.errMsg,
+			      icon: "fail",
+			    });
+			},
+			
+			adclosehandler: function(e){
+			   console.log("广告关闭");
+			},
+			//#endif
 			
 		}
 	}
