@@ -6,7 +6,7 @@
 			<navigator url="../redEnvelope/redEnvelope">
 				<view class="unit">
 					<view class="icon">
-						<image src="https://yanxuan.nosdn.127.net/9caf7313b0d3a29b9f77d70870c1b06a.jpg"></image>
+						<image src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-xiaoyouxi/797c01f0-e05a-11ea-b680-7980c8a877b8.jpg"></image>
 					</view>
 					<view class="title">
 						<view class="title-top">抢红包测速</view>
@@ -19,7 +19,7 @@
 			<navigator url="../memoryTraining/memoryTraining">
 				<view class="unit">
 					<view class="icon">
-						<image src="https://yanxuan.nosdn.127.net/cf4d7e55842946f0ab2b0337a357dadf.jpg"></image>
+						<image src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-xiaoyouxi/7f3ef6a0-e05b-11ea-b997-9918a5dda011.jpg"></image>
 					</view>
 					<view class="title">
 						<view class="title-top">数字记忆训练</view>
@@ -35,7 +35,7 @@
 			<navigator url="../reverseThinking/reverseThinking">
 				<view class="unit">
 					<view class="icon">
-						<image src="https://yanxuan.nosdn.127.net/8c176fd0fdececc4f9493d4a36842ecd.jpg"></image>
+						<image src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-xiaoyouxi/796d5bf0-e05a-11ea-81ea-f115fe74321c.jpg"></image>
 					</view>
 					<view class="title">
 						<view class="title-top">逆向思维训练</view>
@@ -48,7 +48,7 @@
 			<navigator url="../distinguishColor/distinguishColor">
 				<view class="unit">
 					<view class="icon">
-						<image src="https://yanxuan.nosdn.127.net/bce0ea1801289176f2c3f858ed5f94cb.jpg"></image>
+						<image src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-xiaoyouxi/30f01e70-e05b-11ea-8a36-ebb87efcf8c0.jpg"></image>
 					</view>
 					<view class="title">
 						<view class="title-top">色彩辨别测速</view>
@@ -80,15 +80,6 @@
 				uni.setStorageSync('yesterdayDate', currentDate);   // 把当前日作为明天的昨天
 			}
 		},
-		// onShareAppMessage(res){
-		// 	if (res.from === 'button') {// 来自页面内分享按钮
-		// 	      console.log(res.target)
-		// 	    }
-		// 	return {
-		// 	    title: '应急反应训练',
-		// 	    path: '/pages/index/index',
-		// 	}
-		// },
 		methods: {
 
 		}

@@ -5,7 +5,7 @@ image:first-of-type {
 .init {
   position: absolute;
   top: 30%;
-  left: 15%;
+  left: 20%;
   text-align: center;
 }
 .init image {

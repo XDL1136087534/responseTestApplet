@@ -27,7 +27,7 @@
 }
 .init .content text {
   position: absolute;
-  top: 95%;
+  top: 75%;
   left: 23%;
 }
 .startPlay_box {
@@ -91,7 +91,7 @@
 .startPlay_box .buttons view {
   width: 100rpx;
   height: 100rpx;
-  font-size: 60rpx;
+  font-size: 50rpx;
   border-radius: 50%;
   display: -webkit-box;
   display: -webkit-flex;

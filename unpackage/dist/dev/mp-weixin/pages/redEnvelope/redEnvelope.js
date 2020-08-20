@@ -174,6 +174,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -198,6 +214,7 @@ var _default =
     var data = uni.getStorageSync('freeResurrection');
     this.freeResurrection = data.one_num;
 
+    // 字节跳动   接入广告
 
 
 
@@ -207,6 +224,14 @@ var _default =
 
 
 
+
+
+
+
+
+
+
+    // 微信小程序  接入广告
 
     this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' });
     this.videoAd.onLoad(function () {
@@ -273,6 +298,11 @@ var _default =
 
 
 
+        // 字节跳动小程序广告
+
+
+
+
 
 
 
@@ -310,7 +340,35 @@ var _default =
       this.qualified = 0;
       this.qualifiedTime = 800;
       this.start();
-    } } };exports.default = _default;
+    },
+
+    // 字节跳动视频广告
+    TOUTIAO_ad: function TOUTIAO_ad() {var _this3 = this;
+      // 显示广告
+      this.videoAd.
+      show().
+      then(function () {
+        console.log("广告显示成功");
+      }).
+      catch(function (err) {
+        uni.showToast({
+          title: '广告组件出现问题',
+          icon: 'none',
+          mask: true,
+          duration: 2000 });
+
+        _this3.freeResurrection++; // 直接给予用户奖励
+        // 可以手动加载一次
+        _this3.videoAd.load().then(function () {
+          console.log("手动加载成功");
+          // 加载成功后需要再显示广告
+          return _this3.videoAd.show();
+        });
+      });
+    }
+
+    // 字节跳动banner广告
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

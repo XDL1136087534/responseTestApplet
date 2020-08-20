@@ -8,12 +8,10 @@
 			<!--  #ifdef  MP-TOUTIAO -->
 			<ad
 			    unit-id="165r39oskhv2bl8hcb"
-			    bindload="adloadhandler"
-			    binderror="aderrorhandler"
-			    bindclose="adclosehandler"
-				type="lImg rImg"
-				scale="100 100"
-				style="position: fixed;top: 1000rpx;left: 0rpx;"
+			    @load="adloadhandler"
+			    @error="aderrorhandler"
+			    @close="adclosehandler"
+				style="position: fixed;top: 930rpx;left: 0rpx;"
 			  ></ad>
 			<!--  #endif -->
 		</view>
@@ -23,11 +21,31 @@
 					<view @click="judgeColor(index)" class="min-box" v-bind:style="{ 'background-color': item }"></view>
 				</block>
 				<view class="prompt">找出上图不同的色块</view>
+				<!-- 字节跳动banner -->
+				<!--  #ifdef  MP-TOUTIAO -->
+				<ad
+				    unit-id="165r39oskhv2bl8hcb"
+				    @load="adloadhandler"
+				    @error="aderrorhandler"
+				    @close="adclosehandler"
+					style="position: absolute;top: 990rpx;"
+				  ></ad>
+				<!--  #endif -->
 			</block>
 			<block v-else-if="isCorrect===true">
 				<view class="result_title">挑战成功!</view>
 				<view class="result_prompt">您已成功挑战<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
 				<button type="default" @click="continuePlay" id="continue_btn">继续挑战</button>
+				<!-- 字节跳动banner -->
+				<!--  #ifdef  MP-TOUTIAO -->
+				<ad
+				    unit-id="165r39oskhv2bl8hcb"
+				    @load="adloadhandler"
+				    @error="aderrorhandler"
+				    @close="adclosehandler"
+					style="position: absolute;top: 945rpx;"
+				  ></ad>
+				<!--  #endif -->
 			</block>
 			<block v-else>
 				<view class="result_title">挑战失败!</view>
@@ -40,6 +58,16 @@
 					</button>
 					<button type="default" @click="resetPlay" id="reset_btn">重新开始</button>
 				</view>
+				<!-- 字节跳动banner -->
+				<!--  #ifdef  MP-TOUTIAO -->
+				<ad
+				    unit-id="165r39oskhv2bl8hcb"
+				    @load="adloadhandler"
+				    @error="aderrorhandler"
+				    @close="adclosehandler"
+					style="position: absolute;top: 995rpx;"
+				  ></ad>
+				<!--  #endif -->
 			</block>
 		</view>
 		
@@ -195,6 +223,7 @@
 								duration: 2000,
 								icon: 'none'
 							})
+							this.freeResurrection++;
 						}
 					//#endif
 					
@@ -230,13 +259,13 @@
 					    console.log("广告显示成功");
 					})
 					.catch((err) => {
-					    console.log("广告组件出现问题", err);
 						uni.showToast({
 							title: '广告组件出现问题',
 							icon: 'none',
 							mask: true,
 							duration: 2000
 						});
+						this.freeResurrection++;   // 直接给予用户奖励
 					    // 可以手动加载一次
 					    this.videoAd.load().then(() => {
 					      console.log("手动加载成功");

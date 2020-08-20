@@ -162,6 +162,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var _default =
 {
   data: function data() {
@@ -180,6 +196,38 @@ var _default =
     // 获取免费复活次数
     var data = uni.getStorageSync('freeResurrection');
     this.freeResurrection = data.four_num;
+
+    // 字节跳动   接入广告
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // 微信小程序  接入广告
+
+    this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' });
+    this.videoAd.onLoad(function () {
+      console.log('onLoad event emit');
+    });
+    this.videoAd.onError(function (err) {
+      console.log('onError event emit', err);
+    });
+    this.videoAd.onClose(function (res) {
+      console.log('onClose event emit', res);
+    });
+    console.log('videoAd: ' + this.videoAd);
+
   },
   methods: {
     start: function start() {
@@ -238,22 +286,59 @@ var _default =
     },
 
     // 复活继续
-    resurrectionPlay: function resurrectionPlay() {
+    resurrectionPlay: function resurrectionPlay() {var _this = this;
       if (this.freeResurrection > 0) {
         this.freeResurrection--;
         var data = uni.getStorageSync('freeResurrection');
-        data.two_num = this.freeResurrection;
+        data.four_num = this.freeResurrection;
         uni.setStorageSync('freeResurrection', data);
         this.start_flag = false;
         this.isCorrect = null;
         this.start();
       } else
 
+
       uni.showToast({
-        title: '播放广告',
+        title: '其他播放广告',
         icon: 'none',
         mask: true,
         duration: 2000 });
+
+
+
+      // 字节跳动小程序广告
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      this.videoAd.show().
+      catch(function () {
+        _this.videoAd.load().
+        then(function () {return _this.videoAd.show();}).
+        catch(function (err) {
+          console.log('激励视频 广告显示失败');
+        });
+      });
 
     },
 
@@ -266,7 +351,35 @@ var _default =
       this.background_color = 'rgb(155, 239, 215)';
       this.colorList = new Array(16);
       this.currentDifferenceIndex = 0;
-    } } };exports.default = _default;
+    },
+
+    // 字节跳动视频广告
+    TOUTIAO_ad: function TOUTIAO_ad() {var _this2 = this;
+      // 显示广告
+      this.videoAd.
+      show().
+      then(function () {
+        console.log("广告显示成功");
+      }).
+      catch(function (err) {
+        uni.showToast({
+          title: '广告组件出现问题',
+          icon: 'none',
+          mask: true,
+          duration: 2000 });
+
+        _this2.freeResurrection++; // 直接给予用户奖励
+        // 可以手动加载一次
+        _this2.videoAd.load().then(function () {
+          console.log("手动加载成功");
+          // 加载成功后需要再显示广告
+          return _this2.videoAd.show();
+        });
+      });
+    }
+
+    // 字节跳动banner广告
+  } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),

@@ -7,7 +7,7 @@
 				<text>123</text>
 			</view>
 			<view class="content">
-				<view>最厉害的人可以瞬间记住7个数字</view>
+				<view>最厉害的人可以瞬间记住7个字符</view>
 				<view>你能做到吗?</view>
 				<text>单击任意位置开始</text>
 			</view>
@@ -15,11 +15,9 @@
 			<!--  #ifdef  MP-TOUTIAO -->
 			<ad
 			    unit-id="165r39oskhv2bl8hcb"
-			    bindload="adloadhandler"
-			    binderror="aderrorhandler"
-			    bindclose="adclosehandler"
-				type="lImg rImg"
-				scale="100 100"
+			    @load="adloadhandler"
+			    @error="aderrorhandler"
+			    @close="adclosehandler"
 				style="position: fixed;top: 1000rpx;left: 0rpx;"
 			  ></ad>
 			<!--  #endif -->
@@ -34,6 +32,18 @@
 				</view>
 				<view class="time-num">倒计时：{{Math.ceil(time)}}s</view>
 				<view class="prompt">请在5s内记住数字和字母</view>
+				<view style="display: flex;justify-content: center;align-items: center;">
+					<!-- 字节跳动banner -->
+					<!--  #ifdef  MP-TOUTIAO -->
+					<ad
+						unit-id="165r39oskhv2bl8hcb"
+						@load="adloadhandler"
+						@error="aderrorhandler"
+						@close="adclosehandler"
+						style="position: fixed;top: 900rpx;"
+					  ></ad>
+					<!--  #endif -->
+				</view>
 			</block> 
 			<!-- 答题阶段 -->
 			<block v-else>
@@ -42,11 +52,35 @@
 						<text>请输入所记字符</text>
 						<input @input="inputValueFun" v-bind:value="inputValue"/>
 						<button class="submit" @click="submitResult" type="default">确定</button>
+						<view style="display: flex;justify-content: center;align-items: center;">
+							<!-- 字节跳动banner -->
+							<!--  #ifdef  MP-TOUTIAO -->
+							<ad
+								unit-id="165r39oskhv2bl8hcb"
+								@load="adloadhandler"
+								@error="aderrorhandler"
+								@close="adclosehandler"
+								style="position: absolute;top: 375rpx;"
+							  ></ad>
+						<!--  #endif -->
+						</view>
 					</block>
 					<block v-else-if="isCorrect===true">
 						<text style="font-size: 70rpx; color: #00a8f0;">回答正确</text>
 						<view>您已成功坚持<text style="font-size: 45rpx;color: #ff0289">{{qualified}}</text>轮</view>
 						<button class="continue" @click="continuePlay">点击继续</button>
+						<view style="display: flex;justify-content: center;align-items: center;">
+							<!-- 字节跳动banner -->
+							<!--  #ifdef  MP-TOUTIAO -->
+							<ad
+								unit-id="165r39oskhv2bl8hcb"
+								@load="adloadhandler"
+								@error="aderrorhandler"
+								@close="adclosehandler"
+								style="position: absolute;top: 365rpx;"
+							  ></ad>
+							<!--  #endif -->
+						</view>
 					</block>
 					<block v-else>
 						<text style="margin-bottom: 40rpx;font-size: 70rpx; color: #DD524D;">回答错误</text>
@@ -59,6 +93,18 @@
 							<block v-else><image style="width: 40rpx;height: 40rpx;" src="../../static/video.png"></image></block>
 						</button>
 						<button @click="resetPlay" class="reset" type="default">重新开始</button>
+						<view style="display: flex;justify-content: center;align-items: center;">
+							<!-- 字节跳动banner -->
+							<!--  #ifdef  MP-TOUTIAO -->
+							<ad
+								unit-id="165r39oskhv2bl8hcb"
+								@load="adloadhandler"
+								@error="aderrorhandler"
+								@close="adclosehandler"
+								style="position: absolute;top: 555rpx;"
+							  ></ad>
+							<!--  #endif -->
+						</view>
 					</block>
 				</view>
 			</block>
@@ -238,6 +284,7 @@
 								duration: 2000,
 								icon: 'none'
 							})
+							this.freeResurrection++;
 						}
 					//#endif
 					
@@ -289,13 +336,13 @@
 					    console.log("广告显示成功");
 					})
 					.catch((err) => {
-					    console.log("广告组件出现问题", err);
 						uni.showToast({
 							title: '广告组件出现问题',
 							icon: 'none',
 							mask: true,
 							duration: 2000
 						});
+						this.freeResurrection++;   // 直接给予用户奖励
 					    // 可以手动加载一次
 					    this.videoAd.load().then(() => {
 					      console.log("手动加载成功");

@@ -14,12 +14,10 @@
 			<!--  #ifdef  MP-TOUTIAO -->
 			<ad
 			    unit-id="165r39oskhv2bl8hcb"
-			    bindload="adloadhandler"
-			    binderror="aderrorhandler"
-			    bindclose="adclosehandler"
-				type="lImg rImg"
-				scale="100 100"
-				style="position: fixed;top: 1000rpx;left: 0rpx;"
+			    @load="adloadhandler"
+			    @error="aderrorhandler"
+			    @close="adclosehandler"
+				style="position: fixed;top: 930rpx;left: 0rpx;"
 			  ></ad>
 			<!--  #endif -->
 		</view>
@@ -36,6 +34,16 @@
 					<view @click="judgeIsCorrect(true)" class="yes_btn">✔</view>
 					<view @click="judgeIsCorrect(false)" class="no_btn">✘</view>
 				</view>
+				<!-- 字节跳动banner -->
+				<!--  #ifdef  MP-TOUTIAO -->
+				<ad
+					unit-id="165r39oskhv2bl8hcb"
+					@load="adloadhandler"
+					@error="aderrorhandler"
+					@close="adclosehandler"
+					style="position: absolute;top: 990rpx;"
+					></ad>
+				<!-- #endif -->
 			</view>
 			<block v-if="answer_flag===false">
 				<block v-if="result===true">
@@ -43,6 +51,16 @@
 						<view style="color: #007AFF">回答正确</view>
 						<view>您已成功坚持{{qualified}}轮</view>
 						<button class="continue" @click="continuePlay">点击继续</button>
+						<!-- 字节跳动banner -->
+						<!--  #ifdef  MP-TOUTIAO -->
+						<ad
+						    unit-id="165r39oskhv2bl8hcb"
+						    @load="adloadhandler"
+						    @error="aderrorhandler"
+						    @close="adclosehandler"
+							style="position: absolute;top: 410rpx;"
+						  ></ad>
+						<!--  #endif -->
 					</view>
 				</block>
 				<block v-else>
@@ -57,6 +75,16 @@
 							</button>
 							<button @click="resetPlay" class="reset" type="default">重新开始</button>
 						</view>
+						<!-- 字节跳动banner -->
+						<!--  #ifdef  MP-TOUTIAO -->
+						<ad
+						    unit-id="165r39oskhv2bl8hcb"
+						    @load="adloadhandler"
+						    @error="aderrorhandler"
+						    @close="adclosehandler"
+							style="position: absolute;top: 465rpx;"
+						  ></ad>
+						<!--  #endif -->
 					</view>
 				</block>
 			</block>
@@ -342,6 +370,7 @@
 								duration: 2000,
 								icon: 'none'
 							})
+							this.freeResurrection++;
 						}
 					//#endif
 					
@@ -466,13 +495,13 @@
 					    console.log("广告显示成功");
 					})
 					.catch((err) => {
-					    console.log("广告组件出现问题", err);
 						uni.showToast({
 							title: '广告组件出现问题',
 							icon: 'none',
 							mask: true,
 							duration: 2000
 						});
+						this.freeResurrection++;   // 直接给予用户奖励
 					    // 可以手动加载一次
 					    this.videoAd.load().then(() => {
 					      console.log("手动加载成功");

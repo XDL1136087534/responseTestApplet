@@ -8,19 +8,17 @@
 		<view v-if="start_flag===false" class="init">
 			<image @click="start" src="https://vkceyugu.cdn.bspapp.com/VKCEYUGU-xiaoyouxi/91b9e040-cb0e-11ea-8a36-ebb87efcf8c0.png"></image>
 			<view @click="start">点击开始</view>
-			<view >当红包出现,开始点击红包测试</view>
+			<view >当红包出现,需迅速点击红包</view>
 			<!-- 字节跳动banner -->
 			<!--  #ifdef  MP-TOUTIAO -->
 			<ad
 			    unit-id="165r39oskhv2bl8hcb"
-			    bindload="adloadhandler"
-			    binderror="aderrorhandler"
-			    bindclose="adclosehandler"
-				type="lImg rImg"
-				scale="100 100"
-				style="position: fixed;top: 1000rpx;left: 0rpx;"
+			    @load="adloadhandler"
+			    @error="aderrorhandler"
+			    @close="adclosehandler"
+				style="position: fixed;top: 900rpx;"
 			  ></ad>
-			<!--  #endif -->
+			 <!-- #endif -->
 		</view>
 		<!-- 游戏开始 -->
 		<view v-else class="start">
@@ -32,13 +30,26 @@
 				 @click="stopTimer"
 			 ></image>
 			 <view class="result" v-show="speed!=0">
-				 <view v-if="speed<=qualifiedTime">
-					 <view style="font-size: 40px;">{{speed}}ms</view>
-					 <view style="color:green;font-size: 20px;">测试合格</view>
-					 <view style="margin-top: 20rpx;font-size: 35rpx;">当前合格时间:{{qualifiedTime}}ms</view>
-					 <view style="margin-top: 20rpx;font-size: 35rpx;">下轮合格时间:{{futureQualifiedTime}}ms</view>
-					 <view style="font-size: 20px;">您已成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
-					 <button @click="continuePlay" type="default" style="margin-top: 100px;background-color: #4CD964;">继续挑战</button>
+				<view 
+				v-if="speed<=qualifiedTime">
+					<view style="font-size: 40px;">{{speed}}ms</view>
+					<view style="color:green;font-size: 20px;">测试合格</view>
+					<view style="margin-top: 20rpx;font-size: 35rpx;">当前合格时间:{{qualifiedTime}}ms</view>
+					<view style="margin-top: 20rpx;font-size: 35rpx;">下轮合格时间:{{futureQualifiedTime}}ms</view>
+					<view style="font-size: 20px;">您已成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
+					<button @click="continuePlay" type="default" style="margin-top: 100px;background-color: #4CD964;">继续挑战</button>
+					<view style="display: flex;justify-content: center;align-items: center;">
+						 <!-- 字节跳动banner -->
+						 <!--  #ifdef  MP-TOUTIAO -->
+						 <ad
+						    unit-id="165r39oskhv2bl8hcb"
+						    @load="adloadhandler"
+						    @error="aderrorhandler"
+						    @close="adclosehandler"
+						 	style="position: fixed;top: 920rpx;"
+						   ></ad>
+						 <!--  #endif -->
+					 </view>
 				</view>
 				 <view v-else>
 					 <view style="font-size: 40px;">{{speed}}ms</view>
@@ -51,6 +62,18 @@
 						 <block v-else><image style="margin: 20rpx 10rpx;width: 40rpx;height: 40rpx;" src="../../static/video.png"></image></block>
 					</button>
 					 <button class="reset" @click="reset" type="default">重新挑战</button>
+					 <view style="display: flex;justify-content: center;align-items: center;">
+						 <!-- 字节跳动banner -->
+						 <!--  #ifdef  MP-TOUTIAO -->
+						 <ad
+							unit-id="165r39oskhv2bl8hcb"
+							@load="adloadhandler"
+							@error="aderrorhandler"
+							@close="adclosehandler"
+							style="position: fixed;top: 930rpx;"
+						   ></ad>
+						 <!--  #endif -->
+					</view>
 				 </view>
 			 </view>
 		</view>
@@ -98,23 +121,27 @@
 				 },
 			});
 			//#endif
-			
-			 // 微信小程序  接入广告
-			//#ifdef MP-WEIXIN   
-			this.videoAd = wx.createRewardedVideoAd({ adUnitId: 'xxxx' })
-			this.videoAd .onLoad(() => {
-				 console.log('onLoad event emit')
-			})
-			this.videoAd .onError((err) => {
-				 console.log('onError event emit', err)
-			})
-			this.videoAd .onClose((res) => {
-				 console.log('onClose event emit', res)
-			})
-			console.log('videoAd: ' + this.videoAd);
-			//#endif
 		},
 		methods:{
+			
+			// 字节跳动banner广告
+			//// #ifdef MP-TOUTIAO
+			adloadhandler: function(e){
+			    console.log("广告加载成功");
+			},
+			  
+			aderrorhandler: function(e){
+			    console.log("广告加载失败", e);
+				tt.showToast({
+			      title: "广告加载失败" + e.errMsg,
+			      icon: "fail",
+			    });
+			},
+			
+			adclosehandle: function(e){
+			   console.log("广告关闭");
+			},
+			//// #endif
 			start: function(){
 				this.awit_flag = true;
 				this.speed = 0;
@@ -187,6 +214,7 @@
 								duration: 2000,
 								icon: 'none'
 							})
+							this.freeResurrection++;
 						}
 					//#endif
 					
@@ -210,7 +238,7 @@
 				this.start();
 			},
 			
-			// 字节跳动广告
+			// 字节跳动视频广告
 			TOUTIAO_ad: function(){
 				// 显示广告
 				this.videoAd
@@ -219,13 +247,13 @@
 					    console.log("广告显示成功");
 					})
 					.catch((err) => {
-					    console.log("广告组件出现问题", err);
 						uni.showToast({
 							title: '广告组件出现问题',
 							icon: 'none',
 							mask: true,
 							duration: 2000
 						});
+						this.freeResurrection++;   // 直接给予用户奖励
 					    // 可以手动加载一次
 					    this.videoAd.load().then(() => {
 					      console.log("手动加载成功");
@@ -234,25 +262,6 @@
 					    });
 					});
 			},
-			
-			// 字节跳动banner广告
-			// #ifdef MP-TOUTIAO
-			adloadhandler: function(e){
-			    console.log("广告加载成功");
-			},
-			  
-			aderrorhandler: function(e){
-			    console.log("广告加载失败", e);
-				tt.showToast({
-			      title: "广告加载失败" + e.errMsg,
-			      icon: "fail",
-			    });
-			},
-			
-			adclosehandler: function(e){
-			   console.log("广告关闭");
-			},
-			//#endif
 			
 		}
 	}
@@ -273,8 +282,11 @@ image:first-of-type{
 .init{
 	position: absolute;
 	top: 30%;
-	left: 15%;
-	text-align: center;
+	left: 20%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 	image{
 		width: 250rpx;
 		height: 250rpx;
