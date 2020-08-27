@@ -116,22 +116,26 @@
   color: white;
 }
 .start .answer .submit {
+  position: absolute;
+  top: 490rpx;
   background-color: transparent;
 }
 .start .answer .continue {
+  position: absolute;
+  top: 490rpx;
   background-color: transparent;
 }
 .start .answer .resurrection {
-  position: relative;
-  top: 195rpx;
-  left: -140rpx;
+  position: absolute;
+  top: 490rpx;
+  left: -20rpx;
   width: 250rpx;
   background-color: #87f70e;
 }
 .start .answer .reset {
-  position: relative;
-  top: 90rpx;
-  left: 170rpx;
+  position: absolute;
+  top: 490rpx;
+  left: 400rpx;
   width: 220rpx;
   background-color: #f7dd48;
 }

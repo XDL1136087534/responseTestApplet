@@ -34,10 +34,10 @@
 				v-if="speed<=qualifiedTime">
 					<view style="font-size: 40px;">{{speed}}ms</view>
 					<view style="color:green;font-size: 20px;">测试合格</view>
-					<view style="margin-top: 20rpx;font-size: 35rpx;">当前合格时间:{{qualifiedTime}}ms</view>
-					<view style="margin-top: 20rpx;font-size: 35rpx;">下轮合格时间:{{futureQualifiedTime}}ms</view>
-					<view style="font-size: 20px;">您已成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
-					<button @click="continuePlay" type="default" style="margin-top: 100px;background-color: #4CD964;">继续挑战</button>
+					<view style="margin-top: 20rpx;font-size: 30rpx;">当前合格时间:{{qualifiedTime}}ms</view>
+					<view style="margin-top: 20rpx;font-size: 30rpx;">下轮合格时间:{{futureQualifiedTime}}ms</view>
+					<view style="margin-top: 20rpx;font-size: 40rpx;">您已成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
+					<button @click="continuePlay" type="default" class="continue">继续挑战</button>
 					<view style="display: flex;justify-content: center;align-items: center;">
 						 <!-- 字节跳动banner -->
 						 <!--  #ifdef  MP-TOUTIAO -->
@@ -46,7 +46,7 @@
 						    @load="adloadhandler"
 						    @error="aderrorhandler"
 						    @close="adclosehandler"
-						 	style="position: fixed;top: 920rpx;"
+						 	style="position: relative;top: 360rpx;left: 0rpx;"
 						   ></ad>
 						 <!--  #endif -->
 					 </view>
@@ -55,7 +55,7 @@
 					 <view style="font-size: 40px;">{{speed}}ms</view>
 					 <view style="color:rgb(251, 227, 43);font-size: 20px;">测试不合格</view>
 					 <view style="margin-top: 20rpx;font-size: 35rpx;">当前合格时间:{{qualifiedTime}}ms</view>
-					 <view style="font-size: 20px;">您成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
+					 <view style="font-size: 40rpx;">您成功坚持<text style="font-size: 50rpx;color: #007AFF">{{qualified}}</text>轮</view>
 					 <button class="resurrection" @click="resurrectionPlay" type="default">
 						 复活挑战
 						 <block v-if="freeResurrection > 0">({{freeResurrection}})</block>
@@ -70,7 +70,7 @@
 							@load="adloadhandler"
 							@error="aderrorhandler"
 							@close="adclosehandler"
-							style="position: fixed;top: 930rpx;"
+							style="position: relative;top: 360rpx;left: 0rpx;"
 						   ></ad>
 						 <!--  #endif -->
 					</view>
@@ -300,7 +300,8 @@ image:first-of-type{
 .start{
 	position: absolute;
 	top: 0%;
-	left: 28%;
+	left: 220rpx;
+	width: 600rpx;
 	view:first-of-type{
 		margin-top: 300px;
 		font-size: 30px;
@@ -311,21 +312,27 @@ image:first-of-type{
 		height: 100px;
 	}
 	.result{
-		position: fixed;
+		position: absolute;
+		top: -450rpx;
+		left: -150rpx;
+		width: 600rpx;
 		text-align: center;
-		margin: -300rpx 20rpx;
+		.continue{
+			position: absolute;
+			left: 200rpx;
+			margin-top: 300rpx;
+			background-color: #4CD964;
+		}
 		.resurrection{
-			position: relative;
-			top: 285rpx;
-			left: -160rpx;
-			width: 260rpx;
+			position: absolute;
+			left: 0rpx;
+			margin-top: 300rpx;
 			background-color: #87f70e;
 		}
 		.reset{
-			position: relative;
-			top: 190rpx;
-			left: 170rpx;
-			width: 220rpx;
+			position: absolute;
+			left: 360rpx;
+			margin-top: 300rpx;
 			background-color: #f7dd48;
 		}
 	}

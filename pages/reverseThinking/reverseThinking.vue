@@ -17,7 +17,7 @@
 			    @load="adloadhandler"
 			    @error="aderrorhandler"
 			    @close="adclosehandler"
-				style="position: fixed;top: 930rpx;left: 0rpx;"
+				style="position: absolute;top: 800rpx;left: 0rpx;"
 			  ></ad>
 			<!--  #endif -->
 		</view>
@@ -41,7 +41,7 @@
 					@load="adloadhandler"
 					@error="aderrorhandler"
 					@close="adclosehandler"
-					style="position: absolute;top: 990rpx;"
+					style="position: absolute;top: 82%;left: 90rpx;"
 					></ad>
 				<!-- #endif -->
 			</view>
@@ -58,7 +58,7 @@
 						    @load="adloadhandler"
 						    @error="aderrorhandler"
 						    @close="adclosehandler"
-							style="position: absolute;top: 410rpx;"
+							style="position: absolute;top: 95%;left: -55%"
 						  ></ad>
 						<!--  #endif -->
 					</view>
@@ -82,7 +82,7 @@
 						    @load="adloadhandler"
 						    @error="aderrorhandler"
 						    @close="adclosehandler"
-							style="position: absolute;top: 465rpx;"
+							style="position: absolute;top: 285%;left: -55%;"
 						  ></ad>
 						<!--  #endif -->
 					</view>

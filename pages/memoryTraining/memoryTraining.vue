@@ -60,7 +60,7 @@
 								@load="adloadhandler"
 								@error="aderrorhandler"
 								@close="adclosehandler"
-								style="position: absolute;top: 375rpx;"
+								style="position: absolute;top: 560rpx;"
 							  ></ad>
 						<!--  #endif -->
 						</view>
@@ -77,7 +77,7 @@
 								@load="adloadhandler"
 								@error="aderrorhandler"
 								@close="adclosehandler"
-								style="position: absolute;top: 365rpx;"
+								style="position: absolute;top: 560rpx;"
 							  ></ad>
 							<!--  #endif -->
 						</view>
@@ -488,22 +488,26 @@
 			color: white;
 		}
 		.submit{
+			position: absolute;
+			top: 490rpx;
 			background-color: transparent;
 		}
 		.continue{
+			position: absolute;
+			top: 490rpx;
 			background-color: transparent;
 		}
 		.resurrection{
-			position: relative;
-			top: 195rpx;
-			left: -140rpx;
+			position: absolute;
+			top: 490rpx;
+			left: -20rpx;
 			width: 250rpx;
 			background-color: #87f70e;
 		}
 		.reset{
-			position: relative;
-			top: 90rpx;
-			left: 170rpx;
+			position: absolute;
+			top: 490rpx;
+			left: 400rpx;
 			width: 220rpx;
 			background-color: #f7dd48;
 		}

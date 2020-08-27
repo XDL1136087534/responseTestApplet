@@ -6,7 +6,19 @@ image:first-of-type {
   position: absolute;
   top: 30%;
   left: 20%;
-  text-align: center;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
 }
 .init image {
   width: 250rpx;
@@ -19,7 +31,8 @@ image:first-of-type {
 .start {
   position: absolute;
   top: 0%;
-  left: 28%;
+  left: 220rpx;
+  width: 600rpx;
 }
 .start view:first-of-type {
   margin-top: 300px;
@@ -31,22 +44,28 @@ image:first-of-type {
   height: 100px;
 }
 .start .result {
-  position: fixed;
+  position: absolute;
+  top: -450rpx;
+  left: -150rpx;
+  width: 600rpx;
   text-align: center;
-  margin: -300rpx 20rpx;
+}
+.start .result .continue {
+  position: absolute;
+  left: 200rpx;
+  margin-top: 300rpx;
+  background-color: #4CD964;
 }
 .start .result .resurrection {
-  position: relative;
-  top: 285rpx;
-  left: -160rpx;
-  width: 260rpx;
+  position: absolute;
+  left: 0rpx;
+  margin-top: 300rpx;
   background-color: #87f70e;
 }
 .start .result .reset {
-  position: relative;
-  top: 190rpx;
-  left: 170rpx;
-  width: 220rpx;
+  position: absolute;
+  left: 360rpx;
+  margin-top: 300rpx;
   background-color: #f7dd48;
 }
 

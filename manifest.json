@@ -79,5 +79,11 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "mp-qq" : {
+        "appid" : "1110869816",
+        "setting" : {
+            "es6" : true
+        }
     }
 }
